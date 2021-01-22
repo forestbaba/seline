@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { ReactNode } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -31,7 +31,7 @@ const screenHeight = Dimensions.get("window").height;
 
 
 
-const Landing: () => React$Node = () => {
+const Landing: () => ReactNode = () => {
   return (
     <>
       <StatusBar barStyle="dark-content" />

@@ -20,6 +20,8 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import Landing from './screens/Landing';
 import LoginPrompt from './screens/LoginPrompt';
+import PhoneVerification from './screens/PhoneVerification';
+import PhoneVerificationWithInput from './screens/PhoneVerificationWithInput';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -32,7 +34,9 @@ const App: () => React$Node = () => {
     <NavigationContainer>
           <Stack.Navigator>
           {/* <Stack.Screen name="landing"  title="Seline" component={Landing}/> */}
-          <Stack.Screen name="landing"  title="login" component={LoginPrompt}/>
+          {/* <Stack.Screen name="landing"  title="login" component={LoginPrompt}/> */}
+          {/* <Stack.Screen name="landing"  title="login" component={PhoneVerification}/> */}
+          <Stack.Screen name="verifyphone"  title="verify phone" component={PhoneVerificationWithInput}/>
           </Stack.Navigator>
 
     </NavigationContainer>
