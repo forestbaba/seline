@@ -6,6 +6,9 @@ import CarouselCardItem, { SLIDER_WIDTH, ITEM_WIDTH } from './CarouselCardItem'
 import data from './data'
 import SwipeableViews from 'react-swipeable-views-native';
 import BuildYourProfile from './profilesetup/BuildYourProfile';
+import IdentifyYourself from './profilesetup/IdentifyYourself';
+import AddRecoveryEmail from './profilesetup/AddRecoveryEmail';
+import SecureYourAccount from './profilesetup/SecureYourAccount';
 
 const AccountCarousel:React.FC<{item:number}> =() =>{
 
@@ -17,17 +20,17 @@ const AccountCarousel:React.FC<{item:number}> =() =>{
     <View style={styles.parent}>
      <SwipeableViews style={styles.slideContainer}>
     <View style={[styles.slide, styles.slide1]}>
+      <Text>Callers</Text>
       <BuildYourProfile/>
     </View>
     <View style={[styles.slide, styles.slide2]}>
-      <Text style={styles.text}>
-        slide n°2
-      </Text>
+     <IdentifyYourself/>
     </View>
     <View style={[styles.slide, styles.slide3]}>
-      <Text style={styles.text}>
-        slide n°3
-      </Text>
+     <AddRecoveryEmail/>
+    </View>
+    <View style={[styles.slide, styles.slide3]}>
+     <SecureYourAccount/>
     </View>
   </SwipeableViews>
     </View>
@@ -52,10 +55,10 @@ const styles = StyleSheet.create({
     height:"100%"
   },
   slide2: {
-    backgroundColor: '#B3DC4A',
+    // backgroundColor: '#B3DC4A',
   },
   slide3: {
-    backgroundColor: '#6AC0FF',
+    // backgroundColor: '#6AC0FF',
   },
   text: {
     color: '#fff',

@@ -9,6 +9,12 @@ module.exports={
     USE_FROM_FACEBOOK:  "Use from Facebook",
     BUILD_YOUR_PROFILE_DESCRIPTION: "Seline is building real dating between real people, at least add one photo of your self. ",
      IDENTIFY_YOURSELF:  "Identify yourself",
-     INTRODUCE_YOURSELF: "Introduce yourself fill out the details so  people know about you"
+     INTRODUCE_YOURSELF: "Introduce yourself fill out the details so  people know about you",
+     ADD_RECOVERY_EMAIL:"Add Recovery Email",
+     USE_EMAIL_FOR_SECURITY:"Your email will be use for security purpose, such an helping you get back into your accountif you ever forget your password",
+     SECURE_YOUR_ACCOUNT:"Secure your Account",
+     ADD_A_USERNAME:"Add a username and password to keep your account safe ",
+     DEAR_USER_ACCOUNT:"Dear users your account as been created successfully, continue to start using app"
+
 
 }

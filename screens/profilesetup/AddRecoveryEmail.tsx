@@ -1,31 +1,22 @@
 import React from 'react'
 import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
-import {USE_FROM_FACEBOOK, IDENTIFY_YOURSELF,OFFICIAL_RED, OFFICIAL_WHITE, INTRODUCE_YOURSELF} from '../../utility/constants';
+import {USE_FROM_FACEBOOK, ADD_RECOVERY_EMAIL,OFFICIAL_RED, OFFICIAL_WHITE, USE_EMAIL_FOR_SECURITY} from '../../utility/constants';
 import ProfileIconSvg from '../../assets/profileIconSvg.svg';
 import WhiteRoundCornerButton from '../../components/WhiteRoundCornerButton';
 import WhiteRoundCornerButtonBorder from '../../components/WhiteRoundCornerButtonWithBorder'
 import { TextInput } from 'react-native-gesture-handler';
 import RoundCornerTextInput from '../../components/RoundCornerTextInput';
-const IdentifyYourself:React.FC<{}> =()=> {
+
+const AddRecoveryEmail:React.FC<{}> =()=> {
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
-                <Text style={styles.buildprofile}>{IDENTIFY_YOURSELF}</Text>
-                <Text style={styles.buildprofiledesc}>{INTRODUCE_YOURSELF}</Text>
-                <Text  style={styles.title}>I am a</Text>
-                <View style={styles.genderHolder}>
-                    <WhiteRoundCornerButtonBorder color={OFFICIAL_RED} title="Female"  textcolor="#FFF"/>
-                    <WhiteRoundCornerButtonBorder color={OFFICIAL_RED} title="Male  "  textcolor="#FFF"/>
-                </View>
-                <Text  style={styles.title}>Birthday</Text>
+                <Text style={styles.buildprofile}>{ADD_RECOVERY_EMAIL}</Text>
+                <Text style={styles.buildprofiledesc}>{USE_EMAIL_FOR_SECURITY}</Text>
+                
+                <Text style={styles.title}>Email</Text>
                 <View style={styles.inputholder}>
-                    <RoundCornerTextInput placeholder="MM"/>
-                    <RoundCornerTextInput placeholder="DD"/>
-                    <RoundCornerTextInput placeholder="YYYY"/>
-                </View>
-                <Text style={styles.title}>Name</Text>
-                <View style={styles.inputholder}>
-                    <RoundCornerTextInput placeholder="Add your name here" width="90%"/>
+                    <RoundCornerTextInput placeholder="userx@gmail.com" width="90%"/>
                     
                 </View>
             </View>
@@ -33,7 +24,7 @@ const IdentifyYourself:React.FC<{}> =()=> {
             <WhiteRoundCornerButton color={OFFICIAL_RED} title="Add your photo" textcolor="#FFF"/>
 
                 <TouchableOpacity>
-                     <Text style={styles.usefromfacebook}>{USE_FROM_FACEBOOK}</Text>
+                     <Text style={styles.skip}>Skip</Text>
 
                 </TouchableOpacity>
             </View>
@@ -66,9 +57,8 @@ const styles= StyleSheet.create({
         width:"100%",
         marginBottom:20
     },
-    usefromfacebook:{
+    skip:{
         textAlign:'center',
-        color:OFFICIAL_RED,
         paddingTop:10,
         paddingBottom:10
     },
@@ -80,7 +70,10 @@ const styles= StyleSheet.create({
     },
     buildprofiledesc:{
         color:"#282F39",
-        textAlign:'center'
+        textAlign:'center',
+        paddingTop:20,
+        paddingBottom:20
+        
     },
     genderHolder:{
         flexDirection:'row',
@@ -106,4 +99,4 @@ const styles= StyleSheet.create({
         color:OFFICIAL_RED
     }
 })
-export default IdentifyYourself
+export default AddRecoveryEmail
