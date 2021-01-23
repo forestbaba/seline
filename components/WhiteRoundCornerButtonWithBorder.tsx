@@ -1,11 +1,12 @@
 import React,{ReactNode} from 'react';
 import {TouchableOpacity,Text, StyleSheet,Dimensions } from 'react-native';
+import { OFFICIAL_GRAY } from '../utility/constants';
 
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
- const WhiteRoundCornerButton:React.FC<{title?: string,
+ const WhiteRoundCornerButtonWithBorder:React.FC<{title?: string,
      color?:string, textcolor?:string,marginTop?:number}> = ({title,color,textcolor, marginTop}) =>{
     return (
         <TouchableOpacity style={[styles.actionbutton,{backgroundColor:color, marginTop:marginTop}]}>
@@ -17,21 +18,22 @@ const screenHeight = Dimensions.get("window").height;
 const styles = StyleSheet.create({
  
   actionbutton:{
-  marginLeft:screenWidth * 0.1,
-  marginRight:screenWidth *0.1,
+  // marginLeft:screenWidth * 0.1,
+  // marginRight:screenWidth *0.1,
   borderRadius:25,
+  borderColor:OFFICIAL_GRAY
   
   
   },
   actionButtonText:{
     borderRadius:15,
     textAlign:"center",
-    paddingTop:15,
-    paddingBottom:15,
-    fontSize:17,
-    fontWeight:'bold',
+    padding:15,
+    paddingLeft:40,
+    paddingRight:40,
+    fontSize:14,
     color:'#E7000E'
   },
   });
   
-export default  WhiteRoundCornerButton;
+export default  WhiteRoundCornerButtonWithBorder;
