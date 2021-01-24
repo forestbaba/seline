@@ -28,6 +28,8 @@ import IdentifyYourself from './screens/profilesetup/IdentifyYourself';
 import AddRecoveryEmail from './screens/profilesetup/AddRecoveryEmail';
 import SecureYourAccount from './screens/profilesetup/SecureYourAccount';
 import AccountSetupDone from './screens/AccountSetupDone';
+import WhoAreYouInterestedIn from './screens/WhoAreYouInterestedIn';
+import Main from './screens/Main';
 
 
 const screenWidth = Dimensions.get("window").width;
@@ -41,7 +43,8 @@ const App: () => React$Node = () => {
     <NavigationContainer>
           <Stack.Navigator>
           {/* <Stack.Screen name="landing"  title="Seline" component={Landing}/> */}
-          <Stack.Screen name="landing"  title="Seline" component={AccountSetupDone}/>
+          {/* <Stack.Screen name="landing"  title="Seline" component={AccountSetupDone}/> */}
+          <Stack.Screen name="landing"  title="Seline" component={Main}/>
           {/* <Stack.Screen name="landing"  title="login" component={LoginPrompt}/> */}
           {/* <Stack.Screen name="landing"  title="login" component={PhoneVerification}/> */}
           {/* <Stack.Screen name="verifyphone"  title="verify phone" component={PhoneVerificationWithInput}/> */}

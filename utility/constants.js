@@ -14,7 +14,8 @@ module.exports={
      USE_EMAIL_FOR_SECURITY:"Your email will be use for security purpose, such an helping you get back into your accountif you ever forget your password",
      SECURE_YOUR_ACCOUNT:"Secure your Account",
      ADD_A_USERNAME:"Add a username and password to keep your account safe ",
-     DEAR_USER_ACCOUNT:"Dear users your account as been created successfully, continue to start using app"
+     DEAR_USER_ACCOUNT:"Dear users your account as been created successfully, continue to start using app",
+     WHO_ARE_YOU_INTERESTED_IN:"Who are you Interested in?",
 
 
 }

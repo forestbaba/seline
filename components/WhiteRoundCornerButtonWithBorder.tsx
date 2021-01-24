@@ -21,7 +21,8 @@ const styles = StyleSheet.create({
   // marginLeft:screenWidth * 0.1,
   // marginRight:screenWidth *0.1,
   borderRadius:25,
-  borderColor:OFFICIAL_GRAY
+  borderColor:OFFICIAL_GRAY,
+  borderWidth:0.5
   
   
   },
