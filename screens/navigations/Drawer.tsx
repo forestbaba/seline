@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image,Button, Text, StyleSheet,View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {OFFICIAL_RED, OFFICIAL_WHITE} from '../../utility/constants'
+import {OFFICIAL_GRAY, OFFICIAL_RED, OFFICIAL_WHITE} from '../../utility/constants'
 import {
   DrawerItem,
   createDrawerNavigator,
@@ -13,12 +13,15 @@ import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import SelinMenu from '../../assets/SelineMenuIcon.svg'
+import Seline from '../../assets/seline_red.svg';
+import SelineMessageIcon from '../../assets/seline_message_icon.svg';
 // import {  Button, Text } from 'expo-ui-kit';
 // import { LinearGradient } from 'expo-linear-gradient';
 
 // screens
 import Dashboard from './Dashboard';
 import Messages from './Messages';
+import Likes from './Likes';
 import Contact from './Contact';
 import DrawerItemCustom from '../../components/DrawerItemCustom';
 
@@ -33,15 +36,16 @@ const Screens = ({ navigation, style }) => {
       <Stack.Navigator
         screenOptions={{
           headerTransparent: true,
-          headerTitle: null,
+          headerTitle: ()=><Seline  height={65} width={50} fill="blue" style={{marginTop:20, marginBottom:20}}/>,
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <SelinMenu height={45} width={50} fill="blue"/>
-                {/* <Feather name="menu" size={18} color="black" style={{ paddingHorizontal: 10 }} />  */}
-             {/* <AntDesign name="menu" size={18} color="black" style={{ paddingHorizontal: 10 }} /> */}
+                <SelinMenu height={30} width={50} fill="blue" style={{marginLeft:15}}/>
+             
               </TouchableOpacity>
           ),
+          headerRight:()=><SelineMessageIcon height={30} width={30} fill={OFFICIAL_GRAY} style={{marginRight:15}}/>
         }}>
+        <Stack.Screen  name="Likes">{props => <Likes {...props} />}</Stack.Screen>
         <Stack.Screen name="Home">{props => <Dashboard {...props} />}</Stack.Screen>
         <Stack.Screen name="Messages">{props => <Messages {...props} />}</Stack.Screen>
         <Stack.Screen name="Contact">{props => <Contact {...props} />}</Stack.Screen>
@@ -80,7 +84,7 @@ const DrawerContent = props => {
             }}
             labelStyle={styles.drawerLabel}
             // style={styles.drawerItem}
-            onPress={() => props.navigation.navigate('Home')}
+            onPress={() => props.navigation.navigate('Likes')}
             icon={() => <Ionicons name="ios-checkmark-circle-outline" color="white" size={25} />}
           />
           <DrawerItem
@@ -116,11 +120,11 @@ const DrawerContent = props => {
         </View>
       </View>
 
-      <View style={{backgroundColor:"green", marginTop:70}}>
+      <View style={{marginTop:70}}>
         <DrawerItem
           label="Logout"
           labelStyle={{ color: 'white' }}
-          icon={() => <AntDesign name="logout" color="white" size={16} />}
+          icon={() => <AntDesign name="poweroff" color="white" size={16} />}
           onPress={() => alert('Are your sure to logout?')}
         />
       </View>

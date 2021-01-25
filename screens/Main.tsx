@@ -39,12 +39,6 @@ function NotificationsScreen({ navigation }) {
 
 export default function Main() {
   return (
-    // <NavigationContainer>
-      // <Drawer.Navigator initialRouteName="Home">
-      //   <Drawer.Screen name="Home" component={HomeScreen} />
-      //   <Drawer.Screen name="Notifications" component={NotificationsScreen} />
-      // </Drawer.Navigator>
-    // </NavigationContainer>
-    <Drawer/>
+    <Drawer />
   );
 }

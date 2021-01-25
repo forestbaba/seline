@@ -41,7 +41,14 @@ const Stack = createStackNavigator();
 const App: () => React$Node = () => {
   return (
     <NavigationContainer>
-          <Stack.Navigator>
+          <Stack.Navigator screenOptions={{
+    headerShown: false
+    // headerLeft:()=>{
+    //   return(
+    //     <View><Text>Telly</Text></View>
+    //   )
+    // }
+  }}>
           {/* <Stack.Screen name="landing"  title="Seline" component={Landing}/> */}
           {/* <Stack.Screen name="landing"  title="Seline" component={AccountSetupDone}/> */}
           <Stack.Screen name="landing"  title="Seline" component={Main}/>
