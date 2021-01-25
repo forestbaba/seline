@@ -1,6 +1,7 @@
 module.exports={
     OFFICIAL_RED:       "#E7000E",
     OFFICIAL_WHITE:       "#FFFFFF",
+    OFFICIAL_PINK:"#FBD4D6",
     OFFICIAL_GRAY: "#707070",
     PHONE_INSTRUCTION:  "Please enter your valid phone number. we will send you 4-digit code to verify your account",
     ENTER_CODE:         "Enter your code",

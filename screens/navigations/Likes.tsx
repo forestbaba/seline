@@ -47,8 +47,19 @@ const Likes:React.FC<{item:object, index:number}> =({item, index})=> {
             <View style={styles.useraction}> 
             <TouchableOpacity><SelineUnlike width={120} height={120} fill="black"/></TouchableOpacity>
             <TouchableOpacity><SelineLike width={105} height={105}/></TouchableOpacity>
-            
-            
+            <TouchableOpacity onPress={()=>{
+                console.log('go away')
+            }}>
+            <View style={styles.overflowHolder}>
+                {
+                    entries.slice(3).map((item, index) =>{
+                        return <Image source={require('../../assets/Seline_profile_img.jpg')}  
+                        style={[styles.overflowImages,{width:index === 0 ? 50 : index== 1 ? 30 : index == 2 ? 10 : 0, 
+                            height:index === 0 ? 50 : index== 1 ? 30 : index == 2 ? 10 : 0}]}/>
+                    })
+                }
+            </View>
+            </TouchableOpacity>
         </View>
         </>
         );
@@ -63,8 +74,8 @@ const Likes:React.FC<{item:object, index:number}> =({item, index})=> {
               sliderWidth={width}
               itemWidth={width -50}
               activeSlideOffset={20}
-              enableMomentum
-              layoutCardOffset={50}
+            //   enableMomentum
+            //   layoutCardOffset={50}
             />
             </View>
         );
@@ -120,6 +131,18 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent:"center",
         alignItems:"center"
+    },
+    overflowHolder:{
+        flexDirection:"row",
+        justifyContent:"center",
+        alignItems:"center",
+        marginTop:-20
+    },
+    overflowImages:{
+            width: 50,
+            height: 50,
+            borderRadius: 75
+          
     }
 })
 export default Likes;

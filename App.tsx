@@ -30,6 +30,7 @@ import SecureYourAccount from './screens/profilesetup/SecureYourAccount';
 import AccountSetupDone from './screens/AccountSetupDone';
 import WhoAreYouInterestedIn from './screens/WhoAreYouInterestedIn';
 import Main from './screens/Main';
+import Seliners from './screens/Seliners';
 
 
 const screenWidth = Dimensions.get("window").width;
@@ -41,17 +42,17 @@ const Stack = createStackNavigator();
 const App: () => React$Node = () => {
   return (
     <NavigationContainer>
-          <Stack.Navigator screenOptions={{
-    headerShown: false
-    // headerLeft:()=>{
-    //   return(
-    //     <View><Text>Telly</Text></View>
-    //   )
-    // }
-  }}>
+          <Stack.Navigator screenOptions={{ headerShown: false }}>
           {/* <Stack.Screen name="landing"  title="Seline" component={Landing}/> */}
           {/* <Stack.Screen name="landing"  title="Seline" component={AccountSetupDone}/> */}
-          <Stack.Screen name="landing"  title="Seline" component={Main}/>
+          {/* <Stack.Screen name="landing"  title="Seline" component={Main}/> */}
+
+          <Stack.Screen
+           screenOptions={{
+            headerShown: true
+          }}
+           name="Seliners"  title="seliners" component={Seliners}/>
+           
           {/* <Stack.Screen name="landing"  title="login" component={LoginPrompt}/> */}
           {/* <Stack.Screen name="landing"  title="login" component={PhoneVerification}/> */}
           {/* <Stack.Screen name="verifyphone"  title="verify phone" component={PhoneVerificationWithInput}/> */}
