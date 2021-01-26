@@ -9,10 +9,12 @@ const Seliners =({item}:any)=> {
 
     return (
         <View style={styles.userconatiner}> 
+        <TouchableOpacity>
         <Image 
             source={require('../assets/Seline_profile_img.jpg')} 
             style={styles.image}
         />  
+        </TouchableOpacity>
         <View style={styles.bar}> 
         <TouchableOpacity>
             <SelineLikeRed width={100} height={100} fill="red" style={styles.likeBut}/>
