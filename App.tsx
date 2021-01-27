@@ -35,6 +35,7 @@ import Matched from './screens/Matched';
 import ChatList from './screens/ChatList';
 import ChatPage from './screens/ChatPage';
 import Profile from './screens/Profile';
+import ProfileEdit from './screens/ProfileEdit';
 
 
 const screenWidth = Dimensions.get("window").width;
@@ -52,7 +53,8 @@ const App: () => React$Node = () => {
           {/* <Stack.Screen name="landing"  title="Seline" component={Main}/> */}
           {/* <Stack.Screen name="chatlist"  title="Chats" component={ChatList}/> */}
           {/* <Stack.Screen name="chatpage"  title="Chat" component={ChatPage}/> */}
-          <Stack.Screen name="profile"  title="Profile" component={Profile}/>
+          {/* <Stack.Screen name="profile"  title="Profile" component={Profile}/> */}
+          <Stack.Screen name="editprofile"  title="Edit Profile" component={ProfileEdit}/>
           {/* <Stack.Screen name="matched"  title="Seline" component={Matched}/> */}
 
 
