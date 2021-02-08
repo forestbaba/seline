@@ -14,10 +14,15 @@ import {
   useBlurOnFulfill,
   useClearByFocusCell,
 } from 'react-native-confirmation-code-field';
+import { NavigationStackProp } from 'react-navigation-stack';
 
+interface PhoneVer{
+  CELL_COUNT:number,
+  navigation: NavigationStackProp<{}>;
+}
 const CELL_COUNT = 4;
 
-const PhoneVerification:React.FC<{CELL_COUNT:number}> =()=> {
+const PhoneVerification:React.FC<PhoneVer> =({navigation})=> {
     const aceEditorRef = useRef();
 
     const [cca2, setCca2] = useState('')
@@ -67,6 +72,7 @@ const PhoneVerification:React.FC<{CELL_COUNT:number}> =()=> {
               color={OFFICIAL_RED} 
               textcolor={"#fff"}
               // marginTop={40}
+              handlePress={()=> navigation.navigate('accountcarousel)')}
               
               />
               </View>

@@ -26,11 +26,18 @@ import Contact from './Contact';
 import DrawerItemCustom from '../../components/DrawerItemCustom';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { NavigationStackProp } from 'react-navigation-stack';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
-const Screens = ({ navigation, style }) => {
+
+interface ScreenProps{
+    // userslist 
+    navigation:NavigationStackProp,
+    
+}
+const Screens:React.FC<ScreenProps> = ({ navigation, style }) => {
   return (
     <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
       <Stack.Navigator
@@ -43,9 +50,25 @@ const Screens = ({ navigation, style }) => {
              
               </TouchableOpacity>
           ),
-          headerRight:()=><SelineMessageIcon height={30} width={30} fill={OFFICIAL_GRAY} style={{marginRight:15}}/>
+          headerRight:()=>(<TouchableOpacity onPress={()=>navigation.navigate('matched')}>
+            <SelineMessageIcon height={30} width={30} fill={OFFICIAL_GRAY} style={{marginRight:15}}/>
+            </TouchableOpacity> )
         }}>
-        <Stack.Screen  name="Likes">{props => <Likes {...props} />}</Stack.Screen>
+        <Stack.Screen
+        
+         name="Likes">{props => <Likes {...props} 
+         options={{
+          title: 'My home',
+          headerStyle: {
+            backgroundColor: '#f4511e',
+          },
+          headerTintColor: '#fff',
+          headerTitleStyle: {
+            fontWeight: 'bold',
+          },
+        }}
+        
+         navigation={navigation}/>}</Stack.Screen>
         <Stack.Screen name="Home">{props => <Dashboard {...props} />}</Stack.Screen>
         <Stack.Screen name="Messages">{props => <Messages {...props} />}</Stack.Screen>
         <Stack.Screen name="Contact">{props => <Contact {...props} />}</Stack.Screen>

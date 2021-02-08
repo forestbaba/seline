@@ -9,8 +9,15 @@ import BuildYourProfile from './profilesetup/BuildYourProfile';
 import IdentifyYourself from './profilesetup/IdentifyYourself';
 import AddRecoveryEmail from './profilesetup/AddRecoveryEmail';
 import SecureYourAccount from './profilesetup/SecureYourAccount';
+import { NavigationStackProp } from 'react-navigation-stack';
 
-const AccountCarousel:React.FC<{item:number}> =() =>{
+interface AccCarousel{
+  item:number,
+  navigation: NavigationStackProp;
+
+}
+
+const AccountCarousel:React.FC<AccCarousel> =({navigation}) =>{
 
     const [index, setIndex] = React.useState(0)
   const isCarousel = React.useRef(null)
@@ -20,8 +27,7 @@ const AccountCarousel:React.FC<{item:number}> =() =>{
     <View style={styles.parent}>
      <SwipeableViews style={styles.slideContainer}>
     <View style={[styles.slide, styles.slide1]}>
-      <Text>Callers</Text>
-      <BuildYourProfile/>
+      <BuildYourProfile handlePress={()=>navigation.navigate('identify')}/>
     </View>
     <View style={[styles.slide, styles.slide2]}>
      <IdentifyYourself/>

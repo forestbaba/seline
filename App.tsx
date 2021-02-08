@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React,{useEffect, useState,useContext} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -36,6 +36,11 @@ import ChatList from './screens/ChatList';
 import ChatPage from './screens/ChatPage';
 import Profile from './screens/Profile';
 import ProfileEdit from './screens/ProfileEdit';
+import DeleteProfile from './screens/DeleteProfile';
+import LoaderScreen from './screens/LoaderScreen';
+import SelineContextProvider , { SelineContext} from './context/SelineContext';
+import Wrapper from './Wrapper'
+// import SplashScreen from 'react-native-splash-screen'
 
 
 const screenWidth = Dimensions.get("window").width;
@@ -43,31 +48,18 @@ const screenHeight = Dimensions.get("window").height;
 
 const Stack = createStackNavigator();
 
+interface AppProps{
+  title:string
+}
 
-const App: () => React$Node = () => {
+const App:React.FC<AppProps> =({title}) => {
+
+  const [isLoggedIn, setIsLoggedIn] = useState(true)
+
   return (
-    <NavigationContainer>
-          <Stack.Navigator screenOptions={{ headerShown: false }}>
-          {/* <Stack.Screen name="landing"  title="Seline" component={Landing}/> */}
-          {/* <Stack.Screen name="landing"  title="Seline" component={AccountSetupDone}/> */}
-          {/* <Stack.Screen name="landing"  title="Seline" component={Main}/> */}
-          {/* <Stack.Screen name="chatlist"  title="Chats" component={ChatList}/> */}
-          {/* <Stack.Screen name="chatpage"  title="Chat" component={ChatPage}/> */}
-          {/* <Stack.Screen name="profile"  title="Profile" component={Profile}/> */}
-          <Stack.Screen name="editprofile"  title="Edit Profile" component={ProfileEdit}/>
-          {/* <Stack.Screen name="matched"  title="Seline" component={Matched}/> */}
-
-
-          {/* <Stack.Screen screenOptions={{ headerShown: true  }} name="Seliners"  title="seliners" component={Seliners}/> */}
-           
-          {/* <Stack.Screen name="landing"  title="login" component={LoginPrompt}/> */}
-          {/* <Stack.Screen name="landing"  title="login" component={PhoneVerification}/> */}
-          {/* <Stack.Screen name="verifyphone"  title="verify phone" component={PhoneVerificationWithInput}/> */}
-          {/* <Stack.Screen name="accountcarousel"  title="Set up account" component={SecureYourAccount}/> */}
-          {/* <Stack.Screen name="accountcarousel"  title="Set up account" component={AccountCarousel}/> */}
-          </Stack.Navigator>
-
-    </NavigationContainer>
+    <SelineContextProvider>
+      <Wrapper/>
+    </SelineContextProvider>
   );
 };
 

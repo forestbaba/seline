@@ -7,9 +7,16 @@ import WhiteRoundCornerButton from '../components/WhiteRoundCornerButton';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import {OFFICIAL_RED,PHONE_INSTRUCTION} from '../utility/constants';
+import { NavigationContainer } from '@react-navigation/native';
+import { NavigationStackProp } from 'react-navigation-stack';
 
+interface codeVerifyProps{
+  CELL_COUNT:number,
+  navigation: NavigationStackProp<{}>;
 
-const PhoneVerification:React.FC<{CELL_COUNT:number}> =()=> {
+}
+
+const CodeVerification:React.FC<codeVerifyProps> =({navigation})=> {
     const aceEditorRef = useRef();
 
     const [cca2, setCca2] = useState('')
@@ -34,6 +41,7 @@ const PhoneVerification:React.FC<{CELL_COUNT:number}> =()=> {
               color={OFFICIAL_RED} 
               textcolor={"#fff"}
               marginTop={40}
+              handlePress={()=> navigation.navigate('accountcarousel')}
               />
            
         </View>
@@ -125,4 +133,4 @@ const styles = StyleSheet.create({
   title: {textAlign: 'center', fontSize: 30},
   
 })
-export default PhoneVerification;
+export default CodeVerification;

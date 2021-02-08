@@ -6,7 +6,12 @@ import WhiteRoundCornerButton from '../../components/WhiteRoundCornerButton';
 import WhiteRoundCornerButtonBorder from '../../components/WhiteRoundCornerButtonWithBorder'
 import { TextInput } from 'react-native-gesture-handler';
 import RoundCornerTextInput from '../../components/RoundCornerTextInput';
-const IdentifyYourself:React.FC<{}> =()=> {
+import { NavigationStackProp } from 'react-navigation-stack';
+
+interface Ident{
+    navigation:NavigationStackProp
+}
+const IdentifyYourself:React.FC<Ident> =({navigation})=> {
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
@@ -30,7 +35,12 @@ const IdentifyYourself:React.FC<{}> =()=> {
                 </View>
             </View>
             <View style={styles.child2}>
-            <WhiteRoundCornerButton color={OFFICIAL_RED} title="Add your photo" textcolor="#FFF"/>
+            <WhiteRoundCornerButton
+             color={OFFICIAL_RED}
+             title="Add your photo"
+              textcolor="#FFF"
+              handlePress={()=> navigation.navigate('emailrecovery')}
+              />
 
                 <TouchableOpacity>
                      <Text style={styles.usefromfacebook}>{USE_FROM_FACEBOOK}</Text>

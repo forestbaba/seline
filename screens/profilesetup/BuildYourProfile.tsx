@@ -3,7 +3,11 @@ import { View, Text,StyleSheet,TouchableOpacity } from 'react-native';
 import {BUILD_YOUR_PROFILE_DESCRIPTION,USE_FROM_FACEBOOK, BUILD_YOUR_PROFILE,OFFICIAL_RED} from '../../utility/constants';
 import ProfileIconSvg from '../../assets/profileIconSvg.svg';
 import WhiteRoundCornerButton from '../../components/WhiteRoundCornerButton';
-const BuildYourProfile:React.FC<{}> =()=> {
+
+interface Bup{
+    handlePress: ()=>void
+}
+const BuildYourProfile:React.FC<Bup> =({handlePress})=> {
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
@@ -12,7 +16,9 @@ const BuildYourProfile:React.FC<{}> =()=> {
                 <Text style={styles.buildprofiledesc}>{BUILD_YOUR_PROFILE_DESCRIPTION}</Text>
             </View>
             <View style={styles.child2}>
-                <WhiteRoundCornerButton color={OFFICIAL_RED} title="Add your photo" textcolor="#FFF"/>
+                <WhiteRoundCornerButton color={OFFICIAL_RED} 
+                handlePress={handlePress}
+                title="Add your photo" textcolor="#FFF"/>
                 <TouchableOpacity>
                                     <Text style={styles.usefromfacebook}>{USE_FROM_FACEBOOK}</Text>
 

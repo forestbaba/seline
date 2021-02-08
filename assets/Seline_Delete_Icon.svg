@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="79" height="79" viewBox="0 0 79 79">
+  <g id="Group_8276" data-name="Group 8276" transform="translate(-168 -298)">
+    <circle id="Ellipse_404" data-name="Ellipse 404" cx="39.5" cy="39.5" r="39.5" transform="translate(168 298)" fill="#e7000e"/>
+    <path id="ic_delete_forever_24px" d="M7.655,45.473a5.325,5.325,0,0,0,5.309,5.309H34.2a5.325,5.325,0,0,0,5.309-5.309V13.618H7.655Zm6.53-18.9,3.743-3.743,5.654,5.628L29.21,22.83l3.743,3.743L27.325,32.2l5.628,5.628L29.21,41.571l-5.628-5.628-5.628,5.628-3.743-3.743L19.839,32.2ZM32.873,5.655,30.219,3H16.946L14.291,5.655H5v5.309H42.164V5.655Z" transform="translate(184 311)" fill="#fff"/>
+  </g>
+</svg>

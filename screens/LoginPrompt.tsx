@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { ReactNode } from 'react';
+import React, { useContext, useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -16,6 +16,11 @@ import LoginSvg from '../assets/login-prompt.svg';
 import FacebookSvg from '../assets/facebook.svg';
 import TwitterSvg from '../assets/twitter.svg';
 import GoogleSvg from '../assets/google.svg';
+import { NavigationStackProp } from 'react-navigation-stack';
+import { firebase } from '../utility/firebaseConfig'
+import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
+import firestore from '@react-native-firebase/firestore';
+import { useNavigation } from '@react-navigation/native';
 
 import {
   Header,
@@ -25,13 +30,106 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import WhiteRoundCornerButton from '../components/WhiteRoundCornerButton';
+import SelineContextProvider , { SelineContext} from '../context/SelineContext';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+interface PhoneVerificationProps{
+  navigation: NavigationStackProp<{}>;
+}
 
 
-const Landing: () => ReactNode = () => {
+const PhoneVerification:React.FC<PhoneVerificationProps> = () => {
+  const { setisLoggedIn, changeLoginStatus } = useContext(SelineContext)
+
+  const [userInfo, setUserInfo] = useState(null)
+  // GoogleSignin.configure();
+  const navigation = useNavigation();
+
+  useEffect(() => {
+    GoogleSignin.configure({
+      scopes: ['email'], // what API you want to access on behalf of the user, default is email and profile
+      webClientId:'90921608227-sj7bl0ar92t4n34em6g0af0dbehvqrl8.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
+      offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
+    });
+  }, []);
+
+  const handleGoogleAuth=async()=>{
+
+    try {
+      await GoogleSignin.hasPlayServices();
+      const userInfo = await GoogleSignin.signIn(); 
+      console.log('=======', Object.keys(userInfo));
+      console.log('=======', userInfo);
+
+       firestore().collection('Users')
+      .where('email', '==', userInfo.user.email)
+      .get()
+      .then( async querySnapshot => {
+        if(querySnapshot.size === 0){
+
+          const newDoc = firestore().collection('Users').doc()
+          const newDocRef = await newDoc.get()
+
+          let data={
+            uid: newDocRef.id,
+            photo: userInfo.user.photo,
+            givenName: userInfo.user.givenName,
+            familyName: userInfo.user.familyName,
+            name: userInfo.user.name,
+            email: userInfo.user.email,
+            id: userInfo.user.id,
+            signUpMode:"google"
+          }
+
+          firestore()
+          .collection('Users').doc(newDocRef.id)
+          .set(data)
+          .then(() => {
+            setisLoggedIn(true)
+           // navigation.goBack()
+           changeLoginStatus(true)
+            console.log('User added!');
+          }).catch(err =>{
+            console.log('ERR Login: ', err)
+          })
+    
+
+        }else{
+          setisLoggedIn(true)
+          changeLoginStatus(true)
+
+          // navigation.goBack()
+
+        }
+
+      });
+
+      
+    } catch (error) {
+      console.log(error)
+
+      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      //   alert('Cancel');
+      // } else if (error.code === statusCodes.IN_PROGRESS) {
+      //   alert('Signin in progress');
+      //   // operation (f.e. sign in) is in progress already
+      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      //   alert('PLAY_SERVICES_NOT_AVAILABLE');
+      //   // play services not available or outdated
+      // } else {
+      //   // some other error happened
+      // }
+    }
+ 
+    // setInterval(() => {
+    //   let x = GoogleSignin.isSignedIn()
+    //   console.log('>>>>>>>>', x)
+    // }, 5000);
+    
+};
+
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -49,6 +147,7 @@ const Landing: () => ReactNode = () => {
 
               <WhiteRoundCornerButton 
               title={"Continue with Facebook"} 
+              handlePress={()=> navigation.navigate('phoneverification')}
               color={"#E7000E"} textcolor={"#fff"}/>
               <WhiteRoundCornerButton 
               title={"Use phone number"} 
@@ -61,7 +160,7 @@ const Landing: () => ReactNode = () => {
             <TouchableOpacity style={styles.icon_button}>
                <FacebookSvg height={50} width={20} fill="white"/>
             </TouchableOpacity>
-            <TouchableOpacity style={styles.google_icon_button}>
+            <TouchableOpacity style={styles.google_icon_button} onPress={handleGoogleAuth}>
                <GoogleSvg height={50} width={20} fill="blue" />
             </TouchableOpacity>
             <TouchableOpacity style={styles.twitter_icon_button}>
@@ -186,4 +285,4 @@ terms_holder:{
 }
 });
 
-export default Landing;
+export default PhoneVerification;

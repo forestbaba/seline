@@ -7,7 +7,14 @@ import WhiteRoundCornerButtonBorder from '../components/WhiteRoundCornerButtonWi
 import { TextInput } from 'react-native-gesture-handler';
 import RoundCornerTextInput from '../components/RoundCornerTextInput';
 
-const WhoAreYouInterestedIn:React.FC<{}> =()=> {
+import { NavigationStackProp } from 'react-navigation-stack';
+
+interface WhoAre{
+    navigation:NavigationStackProp
+}
+
+const WhoAreYouInterestedIn:React.FC<WhoAre> =({navigation})=> {
+    
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
@@ -19,7 +26,9 @@ const WhoAreYouInterestedIn:React.FC<{}> =()=> {
                 <WhiteRoundCornerButtonBorder color={OFFICIAL_WHITE} title="Everyone" textcolor="#000"/>
             </View>
             <View style={styles.child2}>
-                <WhiteRoundCornerButton color={OFFICIAL_RED} title="Done" textcolor="#FFF"/>
+                <WhiteRoundCornerButton 
+                handlePress={()=> navigation.navigate('main')}
+                color={OFFICIAL_RED} title="Done" textcolor="#FFF"/>
             </View>
             
         </View>

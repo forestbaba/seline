@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React from 'react';
+import React, { ReactNode, useEffect} from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,13 +21,25 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 import WhiteRoundCornerButton from '../components/WhiteRoundCornerButton';
+import { OFFICIAL_RED, OFFICIAL_WHITE } from '../utility/constants';
+import { NavigationStackProp } from 'react-navigation-stack';
+// import SplashScreen from 'react-native-splash-screen'
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+interface LandingProps{
+  navigation: NavigationStackProp<{}>;
+
+}
 
 
-const Landing: React.FC<{}> = () => {
+const Landing: React.FC<LandingProps> = ({navigation}) => {
+
+  useEffect(()=>{
+
+  
+  })
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -41,7 +53,10 @@ const Landing: React.FC<{}> = () => {
             <Text style={styles.hint}>Flirt, Chat and meet people around you</Text>
           </View>
           <View style={styles.child2}>
-              <WhiteRoundCornerButton title={"Let's Get Started"}/>
+              <WhiteRoundCornerButton 
+              handlePress={() => navigation.navigate('loginprompt')
+              }
+              title={"Let's Get Started"} color={OFFICIAL_WHITE} textcolor={OFFICIAL_RED}/>
            
           </View>
         </ImageBackground>

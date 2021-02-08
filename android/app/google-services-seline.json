@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "90921608227",
+    "project_id": "seline-b6b8f",
+    "storage_bucket": "seline-b6b8f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:90921608227:android:b9796bec44b184b6be7d96",
+        "android_client_info": {
+          "package_name": "com.seline"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "90921608227-aj5c9sd75rsnhcuar33pn2otee3l3ra0.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seline",
+            "certificate_hash": "dda996ad40dc5a635fee91e40794bd9f3b0c0241"
+          }
+        },
+        {
+          "client_id": "90921608227-sj7bl0ar92t4n34em6g0af0dbehvqrl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA4NNLSuE_65lG6sG4EAb-ZZw4UjY6TKVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "90921608227-sj7bl0ar92t4n34em6g0af0dbehvqrl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

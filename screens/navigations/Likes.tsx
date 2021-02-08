@@ -6,13 +6,29 @@ import { OFFICIAL_WHITE } from '../../utility/constants';
 import SelineLike from '../../assets/seline_like_icon.svg';
 import SelineUnlike from '../../assets/seline_unlike.svg';
 
-const Likes:React.FC<{item:object, index:number}> =({item, index})=> {
-    const { width, height } = Dimensions.get("window");
 
-    interface itemz{
+import { NavigationStackProp } from 'react-navigation-stack';
+import { NavigationContainer } from '@react-navigation/native';
+
+import { useNavigation } from '@react-navigation/native';
+
+interface LikesProps{
+    // userslist 
+    navigation:NavigationStackProp,
+    item:object, 
+    index:number
+} 
+interface itemz{
         item?:any,
         index:number
     }
+
+
+const Likes:React.FC<LikesProps> =({ item, index})=> {
+    const { width, height } = Dimensions.get("window");
+
+    const navigation = useNavigation();
+
     const entries =[
         {name:"Kathrine Bale", age:25, address:"5, Femi Jefferson, Ogba"},
         {name:"Bisi Cole", age:27, address:"Oba Adeshinda road, Ibeju"},
@@ -47,9 +63,7 @@ const Likes:React.FC<{item:object, index:number}> =({item, index})=> {
             <View style={styles.useraction}> 
             <TouchableOpacity><SelineUnlike width={120} height={120} fill="black"/></TouchableOpacity>
             <TouchableOpacity><SelineLike width={105} height={105}/></TouchableOpacity>
-            <TouchableOpacity onPress={()=>{
-                console.log('go away')
-            }}>
+            <TouchableOpacity onPress={ ()=> navigation.navigate('userslist')}>
             <View style={styles.overflowHolder}>
                 {
                     entries.slice(3).map((item, index) =>{
@@ -86,6 +100,7 @@ const styles = StyleSheet.create({
     parent:{
         marginTop:100,
         borderRadius:25,
+        borderTopLeftRadius:100
         // padding:50
         // marginLeft:100,
         // marginRight:100
@@ -136,7 +151,6 @@ const styles = StyleSheet.create({
         flexDirection:"row",
         justifyContent:"center",
         alignItems:"center",
-        marginTop:-20
     },
     overflowImages:{
             width: 50,

@@ -15,30 +15,16 @@ import { Button, View } from 'react-native';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { NavigationContainer } from '@react-navigation/native';
 import Drawer from './navigations/Drawer';
+import { NavigationStackProp } from 'react-navigation-stack';
 
-function HomeScreen({ navigation }) {
+interface MainProps{
+    navigation:NavigationStackProp,
+   
+}
+const Main:React.FC<MainProps>=({navigation})=> {
   return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button
-        onPress={() => navigation.navigate('Notifications')}
-        title="Go to notifications"
-      />
-    </View>
+    <Drawer/>
   );
 }
 
-function NotificationsScreen({ navigation }) {
-  return (
-    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-      <Button onPress={() => navigation.goBack()} title="Go back home" />
-    </View>
-  );
-}
-
-// const Drawer = createDrawerNavigator();
-
-export default function Main() {
-  return (
-    <Drawer />
-  );
-}
+export default Main;

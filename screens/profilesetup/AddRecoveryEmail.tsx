@@ -6,8 +6,13 @@ import WhiteRoundCornerButton from '../../components/WhiteRoundCornerButton';
 import WhiteRoundCornerButtonBorder from '../../components/WhiteRoundCornerButtonWithBorder'
 import { TextInput } from 'react-native-gesture-handler';
 import RoundCornerTextInput from '../../components/RoundCornerTextInput';
+import { NavigationStackProp } from 'react-navigation-stack';
 
-const AddRecoveryEmail:React.FC<{}> =()=> {
+interface AddRec{
+    navigation:NavigationStackProp
+}
+
+const AddRecoveryEmail:React.FC<AddRec> =({navigation})=> {
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
@@ -21,11 +26,13 @@ const AddRecoveryEmail:React.FC<{}> =()=> {
                 </View>
             </View>
             <View style={styles.child2}>
-            <WhiteRoundCornerButton color={OFFICIAL_RED} title="Add your photo" textcolor="#FFF"/>
+            <WhiteRoundCornerButton color={OFFICIAL_RED}
+            handlePress={()=>navigation.navigate('secureaccount')}
+             title="Add your photo" 
+             textcolor="#FFF"/>
 
                 <TouchableOpacity>
                      <Text style={styles.skip}>Skip</Text>
-
                 </TouchableOpacity>
             </View>
             

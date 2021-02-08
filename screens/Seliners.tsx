@@ -20,7 +20,7 @@ const Seliners =(props:any)=> {
         {name:"Dada James", age:29, address:"Ogo Oluwa Avenue, Ogba"},
     ]
     return (
-        <View style={{marginTop:80}}>
+        <View>
             <GridView
              data={entries}
             dataSource={props.randomizeRows ? dataSource : null}

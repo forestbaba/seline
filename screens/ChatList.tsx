@@ -1,9 +1,12 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 import ChatListItem from '../components/ChatListItem';
 import { OFFICIAL_GRAY } from '../utility/constants';
+import {SelineContext} from '../context/SelineContext'
 
 const  ChatList =({readStatus})=> {
+    const { isLoggedIn } = useContext(SelineContext)
+
     return (
         <View style={styles.parent}>
             <ChatListItem  readStatus={true}/>

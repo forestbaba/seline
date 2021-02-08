@@ -26,9 +26,13 @@ import {DEAR_USER_ACCOUNT} from '../utility/constants'
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
+import { NavigationStackProp } from 'react-navigation-stack';
 
+interface SecAcc{
+    navigation:NavigationStackProp
+}
 
-const Landing: React.FC<{}> = () => {
+const Landing: React.FC<{}> = ({navigation}) => {
   return (
     <>
       <StatusBar barStyle="dark-content" />
@@ -42,7 +46,9 @@ const Landing: React.FC<{}> = () => {
             <Text style={styles.hint}>{DEAR_USER_ACCOUNT}</Text>
           </View>
           <View style={styles.child2}>
-              <WhiteRoundCornerButton title={"Done"} color="white"/>
+              <WhiteRoundCornerButton 
+              handlePress={()=> navigation.navigate('whointerestin')}
+              title={"Done"} color="white"/>
            
           </View>
         </ImageBackground>

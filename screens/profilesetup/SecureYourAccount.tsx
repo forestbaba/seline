@@ -6,8 +6,14 @@ import WhiteRoundCornerButton from '../../components/WhiteRoundCornerButton';
 import WhiteRoundCornerButtonBorder from '../../components/WhiteRoundCornerButtonWithBorder'
 import { TextInput } from 'react-native-gesture-handler';
 import RoundCornerTextInput from '../../components/RoundCornerTextInput';
+import { NavigationStackProp } from 'react-navigation-stack';
 
-const SecureYourAccount:React.FC<{}> =()=> {
+interface SecAcc{
+    navigation:NavigationStackProp
+}
+
+const SecureYourAccount:React.FC<SecAcc> =({navigation})=> {
+    
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
@@ -26,7 +32,10 @@ const SecureYourAccount:React.FC<{}> =()=> {
                 </View>
             </View>
             <View style={styles.child2}>
-            <WhiteRoundCornerButton color={OFFICIAL_RED} title="Done" textcolor="#FFF"/>
+            <WhiteRoundCornerButton 
+            handlePress={()=>navigation.navigate('accountsetupdone')}
+            color={OFFICIAL_RED} 
+            title="Done" textcolor="#FFF"/>
 
                 <TouchableOpacity>
                      <Text style={styles.skip}>Skip</Text>
