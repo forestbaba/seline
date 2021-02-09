@@ -1,16 +1,15 @@
-import React from 'react';
+import React,{useContext, useEffect, useState} from 'react';
 import {Text, View, Image, Dimensions, StyleSheet, TouchableOpacity} from 'react-native';
 import Carousel from 'react-native-snap-carousel';
 import Ficon from 'react-native-vector-icons/FontAwesome'
+import firestore from '@react-native-firebase/firestore';
+import { NavigationStackProp } from 'react-navigation-stack';
+import { NavigationContainer } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { OFFICIAL_WHITE } from '../../utility/constants';
 import SelineLike from '../../assets/seline_like_icon.svg';
 import SelineUnlike from '../../assets/seline_unlike.svg';
-
-
-import { NavigationStackProp } from 'react-navigation-stack';
-import { NavigationContainer } from '@react-navigation/native';
-
-import { useNavigation } from '@react-navigation/native';
+import { SelineContext } from '../../context/SelineContext';
 
 interface LikesProps{
     // userslist 
@@ -25,9 +24,31 @@ interface itemz{
 
 
 const Likes:React.FC<LikesProps> =({ item, index})=> {
+    const { setisLoggedIn, currUser, setUser, user } = useContext(SelineContext)
     const { width, height } = Dimensions.get("window");
-
+    const [loading, setLoading] = useState(false)
     const navigation = useNavigation();
+
+    useEffect(()=>{
+        const initial =async()=>{
+
+            setLoading(true)
+
+            firestore().collection('Users').where('email', '>=', currUser.user.email).get()
+            .then(querySnapshot => {
+                setLoading(false)
+
+                setUser(querySnapshot._docs[0]._data)
+             })
+             .catch(err =>{
+                setLoading(false)
+
+                 console.log('ERR: ', err)
+             })
+            console.log('^%%%%%%%%%%%%%%%%%%%%%%%', currUser.user.email)
+        }
+         initial()
+    },[])
 
     const entries =[
         {name:"Kathrine Bale", age:25, address:"5, Femi Jefferson, Ogba"},
@@ -40,6 +61,7 @@ const Likes:React.FC<LikesProps> =({ item, index})=> {
         {name:"Dada James", age:29, address:"Ogo Oluwa Avenue, Ogba"},
     ]
    const _renderItem = ({item, index}:itemz) => {
+
         return (
             <>
             <View style={styles.parent}>
@@ -76,23 +98,39 @@ const Likes:React.FC<LikesProps> =({ item, index})=> {
             </TouchableOpacity>
         </View>
         </>
-        );
+        )
+    
     }
-   
-        return (
-            <View>
-            <Carousel
 
-              data={entries}
-              renderItem={_renderItem}
-              sliderWidth={width}
-              itemWidth={width -50}
-              activeSlideOffset={20}
-            //   enableMomentum
-            //   layoutCardOffset={50}
-            />
-            </View>
-        );
+    // if(loading){
+    //     return <Text>Loading......</Text>
+    // }
+    // if(user.user){
+    //     return (
+    //         <View>
+    //         <Carousel
+
+    //           data={entries}
+    //           renderItem={_renderItem}
+    //           sliderWidth={width}
+    //           itemWidth={width -50}
+    //           activeSlideOffset={20}
+    //         //   enableMomentum
+    //         //   layoutCardOffset={50}
+    //         />
+    //         </View>
+    //     );
+    // }else{
+
+        return(
+           <View style={styles.parent2}>
+                <Text>Add Address</Text>
+            </View> 
+        )
+        
+    //}
+   
+        
 
 }
 
@@ -157,6 +195,11 @@ const styles = StyleSheet.create({
             height: 50,
             borderRadius: 75
           
+    },
+    parent2:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:"center",
     }
 })
 export default Likes;

@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext,useReducer, useState, useEffect } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -21,6 +21,7 @@ import { firebase } from '../utility/firebaseConfig'
 import { GoogleSignin, statusCodes } from '@react-native-community/google-signin';
 import firestore from '@react-native-firebase/firestore';
 import { useNavigation } from '@react-navigation/native';
+import AsyncStorage from '@react-native-community/async-storage';
 
 import {
   Header,
@@ -31,6 +32,9 @@ import {
 } from 'react-native/Libraries/NewAppScreen';
 import WhiteRoundCornerButton from '../components/WhiteRoundCornerButton';
 import SelineContextProvider , { SelineContext} from '../context/SelineContext';
+import { authReducer } from '../context/reducers/authReducer';
+import { CHANGE_LOGIN_STATUS_SUCCESS } from '../context/types';
+import { AuthContext } from '../context/AuthContext';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
@@ -41,7 +45,12 @@ interface PhoneVerificationProps{
 
 
 const PhoneVerification:React.FC<PhoneVerificationProps> = () => {
-  const { setisLoggedIn, changeLoginStatus } = useContext(SelineContext)
+
+  const {signIn} = React.useContext(AuthContext)
+  
+  const { 
+    setisLoggedIn, changeLoginStatus,dispatchLoginStatus,
+    loginStatus, fetchUserDetails, authContext,sIn } = useContext(SelineContext)
 
   const [userInfo, setUserInfo] = useState(null)
   // GoogleSignin.configure();
@@ -53,74 +62,62 @@ const PhoneVerification:React.FC<PhoneVerificationProps> = () => {
       webClientId:'90921608227-sj7bl0ar92t4n34em6g0af0dbehvqrl8.apps.googleusercontent.com', // client ID of type WEB for your server (needed to verify user ID and offline access)
       offlineAccess: true, // if you want to access Google API on behalf of the user FROM YOUR SERVER
     });
+    
   }, []);
 
   const handleGoogleAuth=async()=>{
 
     try {
-      await GoogleSignin.hasPlayServices();
-      const userInfo = await GoogleSignin.signIn(); 
-      console.log('=======', Object.keys(userInfo));
-      console.log('=======', userInfo);
+      signIn()
+      // sIn()
+     // authContext.signIn()
+      
+      // await GoogleSignin.hasPlayServices();
+      // const userInfo = await GoogleSignin.signIn(); 
+      //  firestore().collection('Users')
+      // .where('email', '==', userInfo.user.email)
+      // .get()
+      // .then( async querySnapshot => {
+      //   if(querySnapshot.size === 0){
 
-       firestore().collection('Users')
-      .where('email', '==', userInfo.user.email)
-      .get()
-      .then( async querySnapshot => {
-        if(querySnapshot.size === 0){
+      //     const newDoc = firestore().collection('Users').doc()
+      //     const newDocRef = await newDoc.get()
 
-          const newDoc = firestore().collection('Users').doc()
-          const newDocRef = await newDoc.get()
+      //     let data={
+      //       uid: newDocRef.id,
+      //       photo: userInfo.user.photo,
+      //       givenName: userInfo.user.givenName,
+      //       familyName: userInfo.user.familyName,
+      //       name: userInfo.user.name,
+      //       email: userInfo.user.email,
+      //       id: userInfo.user.id,
+      //       signUpMode:"google"
+      //     }
 
-          let data={
-            uid: newDocRef.id,
-            photo: userInfo.user.photo,
-            givenName: userInfo.user.givenName,
-            familyName: userInfo.user.familyName,
-            name: userInfo.user.name,
-            email: userInfo.user.email,
-            id: userInfo.user.id,
-            signUpMode:"google"
-          }
-
-          firestore()
-          .collection('Users').doc(newDocRef.id)
-          .set(data)
-          .then(() => {
-            setisLoggedIn(true)
-           // navigation.goBack()
-           changeLoginStatus(true)
-            console.log('User added!');
-          }).catch(err =>{
-            console.log('ERR Login: ', err)
-          })
+      //     firestore()
+      //     .collection('Users').doc(newDocRef.id)
+      //     .set(data)
+      //     .then(() => {
+      //       setisLoggedIn(true)
+      //      changeLoginStatus(true)
+      //       console.log('User added!');
+      //     }).catch(err =>{
+      //       console.log('ERR Login: ', err)
+      //     })
     
 
-        }else{
-          setisLoggedIn(true)
-          changeLoginStatus(true)
+      //   }else{
+      //     AsyncStorage.setItem('authType',"google")
+      //     dispatchLoginStatus({type: CHANGE_LOGIN_STATUS_SUCCESS, data:{name:"James paul"}})
+      //     setisLoggedIn(true)
+      //     changeLoginStatus(true)
+      //   }
 
-          // navigation.goBack()
-
-        }
-
-      });
+      // });
 
       
     } catch (error) {
       console.log(error)
-
-      // if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      //   alert('Cancel');
-      // } else if (error.code === statusCodes.IN_PROGRESS) {
-      //   alert('Signin in progress');
-      //   // operation (f.e. sign in) is in progress already
-      // } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      //   alert('PLAY_SERVICES_NOT_AVAILABLE');
-      //   // play services not available or outdated
-      // } else {
-      //   // some other error happened
-      // }
     }
  
     // setInterval(() => {

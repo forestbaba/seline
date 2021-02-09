@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useContext, useEffect} from 'react';
 import { Image,Button, Text, StyleSheet,View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import {OFFICIAL_GRAY, OFFICIAL_RED, OFFICIAL_WHITE} from '../../utility/constants'
@@ -27,6 +27,8 @@ import DrawerItemCustom from '../../components/DrawerItemCustom';
 
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { NavigationStackProp } from 'react-navigation-stack';
+import { SelineContext } from '../../context/SelineContext';
+import { AuthContext } from '../../context/AuthContext';
 
 const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
@@ -38,6 +40,8 @@ interface ScreenProps{
     
 }
 const Screens:React.FC<ScreenProps> = ({ navigation, style }) => {
+
+
   return (
     <Animated.View style={StyleSheet.flatten([styles.stack, style])}>
       <Stack.Navigator
@@ -78,22 +82,31 @@ const Screens:React.FC<ScreenProps> = ({ navigation, style }) => {
 };
 
 const DrawerContent = props => {
+
+  const { setisLoggedIn, currUser, user } = useContext(SelineContext)
+
+  useEffect(()=>{
+
+    setTimeout(() => {
+          console.log('NNNNNNNNNNNNNNNNNNNNNN', currUser)
+          console.log('NNNNNNNNNNNNNNNNNNNNNN2', user)
+
+    }, 3000);
+  },[])
+ 
+
   return (
     <DrawerContentScrollView {...props} scrollEnabled={false} contentContainerStyle={{ flex: 1, backgroundColor:OFFICIAL_RED }}>
       <View style={{flex:0.9}}>
         <View style={styles.avatarContainer}>
-          <Image
-            source={{
-              source: {uri: require('../../assets/avatar.png')},
-              height: 60,
-              width: 60,
-              scale: 0.5,
-            }}
-            resizeMode="center"
-            style={styles.avatar}
-          />
+        <Image 
+        // source={{uri:currUser.user.photo || null}}
+        source={{uri: 'null'}}
+        style={styles.avatar}/>
+
           <Text style={styles.username}>
-            James Kawag
+           {/* {currUser.user.name} */}
+           Sample
           </Text>
           <Text style={styles.addr}>
           34. Egbeda, Lagos
@@ -148,7 +161,7 @@ const DrawerContent = props => {
           label="Logout"
           labelStyle={{ color: 'white' }}
           icon={() => <AntDesign name="poweroff" color="white" size={16} />}
-          onPress={() => alert('Are your sure to logout?')}
+          onPress={() => {signOut()}}
         />
       </View>
     </DrawerContentScrollView>
@@ -215,7 +228,10 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderColor: 'white',
     borderWidth: StyleSheet.hairlineWidth,
-    height:60
+    height:80,
+
+              width: 80,
+              // scale: 0.5,
   },
   avatarContainer:{
       flex:0.4,
@@ -227,7 +243,7 @@ const styles = StyleSheet.create({
   },
   username:{
     color:OFFICIAL_WHITE,
-    fontSize:25,
+    fontSize:18,
     fontWeight:'bold'
   },
   addr:{
