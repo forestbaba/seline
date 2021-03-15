@@ -14,12 +14,13 @@ const  SelineContextProvider =(props)=>{
     const [loginStatus, dispatchLoginStatus] = useReducer(authReducer,{});
     const [isLoggedIn, setisLoggedIn] = useState(false);
     const [currUser, setCurrUser] = useState({})
-    const [user, setUser] = useState();
+    const [user, setUser] = useState(null);
     const [userToken, setuserToken] = useState("")
 
 
     return(
-        <SelineContext.Provider value={{isLoggedIn,
+        <SelineContext.Provider 
+        value={{isLoggedIn,
             user,setUser,setisLoggedIn,
          loginStatus,  currUser,dispatchLoginStatus,  setCurrUser,
          userToken,
