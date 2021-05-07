@@ -1,5 +1,5 @@
 import 'react-native-gesture-handler';
-import React,{useEffect, useState,useContext} from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -7,7 +7,7 @@ import {
   View,
   Text,
   StatusBar,
-  ImageBackground,Dimensions
+  ImageBackground, Dimensions
 } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
@@ -35,6 +35,7 @@ import AddRecoveryEmail from './screens/profilesetup/AddRecoveryEmail';
 import SecureYourAccount from './screens/profilesetup/SecureYourAccount';
 import AccountSetupDone from './screens/AccountSetupDone';
 import WhoAreYouInterestedIn from './screens/WhoAreYouInterestedIn';
+import RandomThoughts from './screens/RandomThoughts';
 import Main from './screens/Main';
 import Seliners from './screens/Seliners';
 import Matched from './screens/Matched';
@@ -44,22 +45,25 @@ import Profile from './screens/Profile';
 import ProfileEdit from './screens/ProfileEdit';
 import DeleteProfile from './screens/DeleteProfile';
 import LoaderScreen from './screens/LoaderScreen';
-import SelineContextProvider , { SelineContext} from './context/SelineContext';
-import {AuthContext} from './context/AuthContext';
-import {handleGoogleAuth} from './utility/authHelper';
+import SelineContextProvider, { SelineContext } from './context/SelineContext';
+import { AuthContext } from './context/AuthContext';
+import { handleGoogleAuth } from './utility/authHelper';
+import PrivacySettings from './screens/PrivacySettings';
+import ProfileUpdate from './screens/ProfileUpdate';
 
 import Geolocation from '@react-native-community/geolocation';
+import ProfileOverview from './screens/PrivacySettings';
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
 const Stack = createStackNavigator();
 
-interface WrapperProps{
-  title:string
+interface WrapperProps {
+  title: string
 }
 
-const Wrapper:React.FC<WrapperProps> =({title}) => {
+const Wrapper: React.FC<WrapperProps> = ({ title }) => {
 
   const [loading, setLoading] = useState(false);
   // const [userToken, setuserToken] = useState<any>(null)
@@ -69,45 +73,45 @@ const Wrapper:React.FC<WrapperProps> =({title}) => {
   const { setCurrUser, setUser } = useContext(SelineContext)
 
 
- let initialLoginState={
+  let initialLoginState = {
     isLoading: true,
     userName: null,
     userToken: null,
     userDetails: null
   }
 
-  const loginreducer =(prevState:any, action:any)=>{
-    switch( action.type){
+  const loginreducer = (prevState: any, action: any) => {
+    switch (action.type) {
       case "RETRIEVE_TOKEN":
         return {
-          ...prevState, 
+          ...prevState,
           userToken: action.token,
           userDetails: action.userDetails,
-          isLoading:false
+          isLoading: false
         };
       case "LOGIN":
         return {
-          ...prevState, 
+          ...prevState,
           userName: action.id,
           userToken: action.token,
           userDetails: action.userDetails,
-          isLoading:false
+          isLoading: false
         };
       case "LOGOUT":
         return {
-          ...prevState, 
+          ...prevState,
           userName: null,
           userToken: null,
-          userDetails:null,
-          isLoading:false
+          userDetails: null,
+          isLoading: false
         };
       case "REGISTER":
         return {
-          ...prevState, 
+          ...prevState,
           userName: action.id,
           userToken: action.token,
           userDetails: action.userDetails,
-          isLoading:false
+          isLoading: false
         };
     }
   }
@@ -119,34 +123,34 @@ const Wrapper:React.FC<WrapperProps> =({title}) => {
 
     let userToken: any;
     userToken = null;
-    let userDetails:any = null
+    let userDetails: any = null
 
     setTimeout(async () => {
       try {
         userToken = await AsyncStorage.getItem('userToken')
-        if(userToken){
-      
+        if (userToken) {
+
           firestore().collection('Users')
-      .where('uid', '==', userToken)
-      .get()
-      .then( async snap=>{
-        userDetails = snap.docs[0]._data
-       await AsyncStorage.setItem('userdetails', userToken)
-       console.log('Full Data: ', userDetails)
-        setCurrUser(userDetails)
-        setUser('userDetails')
+            .where('uid', '==', userToken)
+            .get()
+            .then(async snap => {
+              userDetails = snap.docs[0]._data
+              await AsyncStorage.setItem('userdetails', userToken)
+              console.log('Full Data: ', userDetails)
+              setCurrUser(userDetails)
+              setUser('userDetails')
 
 
-      }).catch(err =>{
-        console.log('ERR: ', err)
-      })
-     }
+            }).catch(err => {
+              console.log('ERR: ', err)
+            })
+        }
         console.log('Toks: ', userToken)
-        
+
       } catch (error) {
         console.log(error)
       }
-      dispatch({type:"RETRIEVE_TOKEN", token: userToken, userDetails:userDetails})
+      dispatch({ type: "RETRIEVE_TOKEN", token: userToken, userDetails: userDetails })
 
     }, 3000);
 
@@ -155,84 +159,84 @@ const Wrapper:React.FC<WrapperProps> =({title}) => {
 
   const authContext = React.useMemo(() => ({
 
-    signIn: async () =>{
+    signIn: async () => {
       try {
-         let userToken:any;
-      userToken = null
+        let userToken: any;
+        userToken = null
 
-     let location:object = {};
-      const userInfo = await GoogleSignin.signIn(); 
-       firestore().collection('Users')
-      .where('email', '==', userInfo.user.email)
-      .get()
-      .then( async querySnapshot => {
-        if(querySnapshot.size === 0){
-           Geolocation.getCurrentPosition(info => { location = info});
+        let location: object = {};
+        const userInfo = await GoogleSignin.signIn();
+        firestore().collection('Users')
+          .where('email', '==', userInfo.user.email)
+          .get()
+          .then(async querySnapshot => {
+            if (querySnapshot.size === 0) {
+              Geolocation.getCurrentPosition(info => { location = info });
 
-          const newDoc = firestore().collection('Users').doc()
-          const newDocRef = await newDoc.get()
+              const newDoc = firestore().collection('Users').doc()
+              const newDocRef = await newDoc.get()
 
-          let data={
-            uid: newDocRef.id,
-            photo: userInfo.user.photo,
-            givenName: userInfo.user.givenName,
-            familyName: userInfo.user.familyName,
-            name: userInfo.user.name,
-            email: userInfo.user.email,
-            id: userInfo.user.id,
-            signUpMode:"google",
-            location: location
-          }
+              let data = {
+                uid: newDocRef.id,
+                photo: userInfo.user.photo,
+                givenName: userInfo.user.givenName,
+                familyName: userInfo.user.familyName,
+                name: userInfo.user.name,
+                email: userInfo.user.email,
+                id: userInfo.user.id,
+                signUpMode: "google",
+                location: location
+              }
 
-          userToken = newDocRef.id
-          firestore()
-          .collection('Users').doc(newDocRef.id)
-          .set(data)
-          .then(async data => {
-               newDocRef.id;
-               await AsyncStorage.setItem('userToken',newDocRef.id)
-               setCurrUser(data)
-               dispatch({type:"LOGIN",  token: userToken, userData: data})
+              userToken = newDocRef.id
+              firestore()
+                .collection('Users').doc(newDocRef.id)
+                .set(data)
+                .then(async data => {
+                  newDocRef.id;
+                  await AsyncStorage.setItem('userToken', newDocRef.id)
+                  setCurrUser(data)
+                  dispatch({ type: "LOGIN", token: userToken, userData: data })
 
-            console.log('User added!' ,  newDocRef.id);
-          }).catch(err =>{
-            
+                  console.log('User added!', newDocRef.id);
+                }).catch(err => {
 
-            console.log('ERR Login: ', err)
-          })
-    
 
-        }else{
+                  console.log('ERR Login: ', err)
+                })
 
-          setCurrUser(querySnapshot.docs[0]._data)
-          userToken=querySnapshot.docs[0]._data.uid
-          await AsyncStorage.setItem('userToken',querySnapshot.docs[0]._data.uid)
-          await AsyncStorage.setItem('userdetails',querySnapshot.docs[0]._data)
-            console.log('========',querySnapshot.docs[0]._data.uid )
-            dispatch({type:"LOGIN",  token: userToken, userData:querySnapshot.docs[0]._data})
-         
-        }
 
-      });
+            } else {
 
-    } catch (error) {
+              setCurrUser(querySnapshot.docs[0]._data)
+              userToken = querySnapshot.docs[0]._data.uid
+              await AsyncStorage.setItem('userToken', querySnapshot.docs[0]._data.uid)
+              await AsyncStorage.setItem('userdetails', querySnapshot.docs[0]._data)
+              console.log('========', querySnapshot.docs[0]._data.uid)
+              dispatch({ type: "LOGIN", token: userToken, userData: querySnapshot.docs[0]._data })
+
+            }
+
+          });
+
+      } catch (error) {
         console.log('ERR: ', error)
-}
-  
+      }
 
 
 
 
-   
+
+
 
       // let username='userx'
       //let userToken;
-    //  userToken = null
+      //  userToken = null
 
       // try {
       //   userToken = 'kjdfkk'
       //    await AsyncStorage.setItem('userToken',userToken)
-        
+
       // } catch (error) {
       //   console.log(error)
       // }
@@ -240,86 +244,97 @@ const Wrapper:React.FC<WrapperProps> =({title}) => {
       //   setLoading(false)
       //   dispatch({type:"LOGIN", id:username, token: userToken})
     },
-    signOut: async() =>{
+    signOut: async () => {
       console.log('Handle sign out')
       let m1 = AsyncStorage.getItem('userToken');
       console.log('Old token: ', m1)
 
       try {
-         await AsyncStorage.setItem('userToken','')
-        
+        await AsyncStorage.setItem('userToken', '')
+
       } catch (error) {
         console.log(error)
       }
       let m2 = AsyncStorage.getItem('userToken');
       console.log('Old token 2: ', m2)
-        dispatch({type:"LOGOUT"})
+      dispatch({ type: "LOGOUT" })
 
     },
     signUp: () => {
       console.log('Handle sign up')
 
-        setLoading(false)
-        // setuserToken("abc")
+      setLoading(false)
+      // setuserToken("abc")
     },
 
-  }),[])
+  }), [])
 
 
 
-  if(loginState.isLoading){
-    return <LoaderScreen/>;
+  if (loginState.isLoading) {
+    return <LoaderScreen />;
   }
-  return (   
-  <SelineContextProvider>
+  return (
+    <SelineContextProvider>
 
-    <AuthContext.Provider value= {authContext}>
-    <NavigationContainer>
-      
-      
+      <AuthContext.Provider value={authContext}>
+        <NavigationContainer>
+
+
           <Stack.Navigator>
+
+
+            {/* <Stack.Screen name="randomthoughts"      title="Random"      component={RandomThoughts}/> */}
+
             {/* <Stack.Screen name="loader" options={{ headerTransparent: true, headerShown: false}}   component={LoaderScreen}></Stack.Screen> */}
- {
+            {
               loginState.userToken !== null || loginState.userToken && loginState.userToken.length > 0 ? (
-                <>         
-                <Stack.Screen name="main" options={{ headerTransparent: true, headerShown: false}}              title="Seline"         component={Main}/>
-                <Stack.Screen name="userslist"          title="seliners"       component={Seliners}/>
-                 <Stack.Screen name="matched"            title="Seline"         component={Matched}/>
-               </>
-                
-              ):(
-               <>
-                <Stack.Screen name="loginprompt"        title="login"          component={LoginPrompt}/>
-                <Stack.Screen  options={{ headerTransparent: true, headerShown: false}} name="landing"            title="Seline"         component={Landing}/>
-                <Stack.Screen name="phoneverification"  title="Verify Phone"   component={PhoneVerification}/>
-                <Stack.Screen name="verifycode"         title="verify code"    component={PhoneVerificationWithInput}/>
-                <Stack.Screen name="accountcarousel"    title="Set up Profile" component={AccountCarousel}/>
-                <Stack.Screen name="identify"           title="Identity"       component={IdentifyYourself}/>
-                <Stack.Screen name="emailrecovery"      title="Email Recovery" component={AddRecoveryEmail}/>
-                <Stack.Screen name="secureaccount"      title="Secure account" component={SecureYourAccount}/>
-                <Stack.Screen name="accountsetupdone"   title="Set up Done"    component={AccountSetupDone}/>
-                <Stack.Screen name="whointerestin"      title="Interests"      component={WhoAreYouInterestedIn}/>
+                <>
+                  <Stack.Screen name="main" options={{ headerTransparent: true, headerShown: false }} title="Seline" component={Main} />
+                  <Stack.Screen name="userslist" title="seliners" component={Seliners} />
+                  <Stack.Screen name="matched" title="Seline" component={Matched} />
+
+                  <Stack.Screen name="Profile" title="profile" component={Profile} />
+                    <Stack.Screen name="Privacy Settings" title="Privacy" component={PrivacySettings} />
+                    <Stack.Screen name="ProfileUpdate" title="Update" component={ProfileUpdate} />
                 </>
-              )
+
+              ) : (
+                  <>
+                    <Stack.Screen name="loginprompt" title="login" component={LoginPrompt} />
+                    <Stack.Screen options={{ headerTransparent: true, headerShown: false }} name="landing" title="Seline" component={Landing} />
+                    <Stack.Screen name="phoneverification" title="Verify Phone" component={PhoneVerification} />
+                    <Stack.Screen name="verifycode" title="verify code" component={PhoneVerificationWithInput} />
+                    <Stack.Screen name="accountcarousel" title="Set up Profile" component={AccountCarousel} />
+                    <Stack.Screen name="identify" title="Identity" component={IdentifyYourself} />
+                    <Stack.Screen name="emailrecovery" title="Email Recovery" component={AddRecoveryEmail} />
+                    <Stack.Screen name="secureaccount" title="Secure account" component={SecureYourAccount} />
+                    <Stack.Screen name="accountsetupdone" title="Set up Done" component={AccountSetupDone} />
+                    <Stack.Screen name="whointerestin" title="Interests" component={WhoAreYouInterestedIn} />
+                    <Stack.Screen name="main" options={{ headerTransparent: true, headerShown: false }} title="Seline" component={Main} />
+                  
+                   
+                  </>
+                )
             }
-      
- 
 
 
-          {/* <Stack.Screen name="editprofile"  title="Edit Profile" component={ProfileEdit}/> */}
-
-          {/* <Stack.Screen name="deleteprofile"  title="Delete Profile" component={DeleteProfile}/> */}
-          {/* <Stack.Screen name="chatlist"  title="Chats" component={ChatList}/> */}
-          {/* <Stack.Screen name="chatpage"  title="Chat" component={ChatPage}/> */}
-          {/* <Stack.Screen name="profile"  title="Profile" component={Profile}/> */}
 
 
-           
+            {/* <Stack.Screen name="editprofile"  title="Edit Profile" component={ProfileEdit}/> */}
+
+            {/* <Stack.Screen name="deleteprofile"  title="Delete Profile" component={DeleteProfile}/> */}
+            {/* <Stack.Screen name="chatlist"  title="Chats" component={ChatList}/> */}
+            {/* <Stack.Screen name="chatpage"  title="Chat" component={ChatPage}/> */}
+            {/* <Stack.Screen name="profile"  title="Profile" component={Profile}/> */}
+
+
+
           </Stack.Navigator>
 
-    </NavigationContainer>
-    </AuthContext.Provider> 
-   </SelineContextProvider>
+        </NavigationContainer>
+      </AuthContext.Provider>
+    </SelineContextProvider>
 
   );
 };
@@ -327,45 +342,45 @@ const Wrapper:React.FC<WrapperProps> =({title}) => {
 const styles = StyleSheet.create({
   backgroundImage: {
     flex: 1,
-    maxHeight:'100%',
-},
-child1:{
-  width:screenWidth,
-  marginTop:screenHeight *0.1
-},
-child2:{
-  width:screenWidth,
-  marginTop:screenHeight *0.3
-},
-appName:{
-  color:"#FFFFFF",
-  textAlign:"center",
-  fontSize:50,
-  fontWeight:"bold"
-},
-hint:{
-  textAlign:'center',
-  color:'#ffffff',
-  fontSize:18,
-  paddingTop:15,paddingBottom:15
-},
-actionbutton:{
-backgroundColor:"#fff",
-marginLeft:screenWidth * 0.1,
-marginRight:screenWidth *0.1,
-borderRadius:25
+    maxHeight: '100%',
+  },
+  child1: {
+    width: screenWidth,
+    marginTop: screenHeight * 0.1
+  },
+  child2: {
+    width: screenWidth,
+    marginTop: screenHeight * 0.3
+  },
+  appName: {
+    color: "#FFFFFF",
+    textAlign: "center",
+    fontSize: 50,
+    fontWeight: "bold"
+  },
+  hint: {
+    textAlign: 'center',
+    color: '#ffffff',
+    fontSize: 18,
+    paddingTop: 15, paddingBottom: 15
+  },
+  actionbutton: {
+    backgroundColor: "#fff",
+    marginLeft: screenWidth * 0.1,
+    marginRight: screenWidth * 0.1,
+    borderRadius: 25
 
 
-},
-actionButtonText:{
-  borderRadius:15,
-  textAlign:"center",
-  paddingTop:15,
-  paddingBottom:15,
-  fontSize:17,
-  fontWeight:'bold',
-  color:'#E7000E'
-},
+  },
+  actionButtonText: {
+    borderRadius: 15,
+    textAlign: "center",
+    paddingTop: 15,
+    paddingBottom: 15,
+    fontSize: 17,
+    fontWeight: 'bold',
+    color: '#E7000E'
+  },
 });
 
 export default Wrapper;

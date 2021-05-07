@@ -1,7 +1,7 @@
-import React,{useContext, useEffect} from 'react';
-import { Image,Button, Text, StyleSheet,View } from 'react-native';
+import React, { useContext, useEffect } from 'react';
+import { Image, Button, Text, StyleSheet, View } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
-import {OFFICIAL_GRAY, OFFICIAL_RED, OFFICIAL_WHITE} from '../../utility/constants'
+import { OFFICIAL_GRAY, OFFICIAL_RED, OFFICIAL_WHITE } from '../../utility/constants'
 import {
   DrawerItem,
   createDrawerNavigator,
@@ -34,12 +34,12 @@ const Stack = createStackNavigator();
 const Drawer = createDrawerNavigator();
 
 
-interface ScreenProps{
-    // userslist 
-    navigation:NavigationStackProp,
-    
+interface ScreenProps {
+  // userslist 
+  navigation: NavigationStackProp,
+
 }
-const Screens:React.FC<ScreenProps> = ({ navigation, style }) => {
+const Screens: React.FC<ScreenProps> = ({ navigation, style }) => {
 
 
   return (
@@ -47,32 +47,32 @@ const Screens:React.FC<ScreenProps> = ({ navigation, style }) => {
       <Stack.Navigator
         screenOptions={{
           headerTransparent: true,
-          headerTitle: ()=><Seline  height={65} width={50} fill="blue" style={{marginTop:20, marginBottom:20}}/>,
+          headerTitle: () => <Seline height={65} width={50} fill="blue" style={{ marginTop: 20, marginBottom: 20 }} />,
           headerLeft: () => (
             <TouchableOpacity onPress={() => navigation.openDrawer()}>
-                <SelinMenu height={30} width={50} fill="blue" style={{marginLeft:15}}/>
-             
-              </TouchableOpacity>
+              <SelinMenu height={30} width={50} fill="blue" style={{ marginLeft: 15 }} />
+
+            </TouchableOpacity>
           ),
-          headerRight:()=>(<TouchableOpacity onPress={()=>navigation.navigate('matched')}>
-            <SelineMessageIcon height={30} width={30} fill={OFFICIAL_GRAY} style={{marginRight:15}}/>
-            </TouchableOpacity> )
+          headerRight: () => (<TouchableOpacity onPress={() => navigation.navigate('matched')}>
+            <SelineMessageIcon height={30} width={30} fill={OFFICIAL_GRAY} style={{ marginRight: 15 }} />
+          </TouchableOpacity>)
         }}>
         <Stack.Screen
-        
-         name="Likes">{props => <Likes {...props} 
-         options={{
-          title: 'My home',
-          headerStyle: {
-            backgroundColor: '#f4511e',
-          },
-          headerTintColor: '#fff',
-          headerTitleStyle: {
-            fontWeight: 'bold',
-          },
-        }}
-        
-         navigation={navigation}/>}</Stack.Screen>
+
+          name="Likes">{props => <Likes {...props}
+            options={{
+              title: 'My home',
+              headerStyle: {
+                backgroundColor: '#f4511e',
+              },
+              headerTintColor: '#fff',
+              headerTitleStyle: {
+                fontWeight: 'bold',
+              },
+            }}
+
+            navigation={navigation} />}</Stack.Screen>
         <Stack.Screen name="Home">{props => <Dashboard {...props} />}</Stack.Screen>
         <Stack.Screen name="Messages">{props => <Messages {...props} />}</Stack.Screen>
         <Stack.Screen name="Contact">{props => <Contact {...props} />}</Stack.Screen>
@@ -85,38 +85,43 @@ const DrawerContent = props => {
 
   const { setisLoggedIn, currUser, user } = useContext(SelineContext)
 
-  useEffect(()=>{
+  useEffect(() => {
 
     setTimeout(() => {
-          console.log('NNNNNNNNNNNNNNNNNNNNNN', currUser)
-          console.log('NNNNNNNNNNNNNNNNNNNNNN2', user)
+      console.log('NNNNNNNNNNNNNNNNNNNNNN', currUser)
+      console.log('NNNNNNNNNNNNNNNNNNNNNN2', user)
 
     }, 3000);
-  },[])
- 
+  }, [])
+
 
   return (
-    <DrawerContentScrollView {...props} scrollEnabled={false} contentContainerStyle={{ flex: 1, backgroundColor:OFFICIAL_RED }}>
-      <View style={{flex:0.9}}>
+    <DrawerContentScrollView {...props} scrollEnabled={false} contentContainerStyle={{ flex: 1, backgroundColor: OFFICIAL_RED }}>
+      <View style={{ flex: 0.9 }}>
+       
         <View style={styles.avatarContainer}>
-        <Image 
-        // source={{uri:currUser.user.photo || null}}
-        source={{uri: 'null'}}
-        style={styles.avatar}/>
+          <Image
+            // source={{uri:currUser.user.photo || null}}
+            source={{ uri: 'null' }}
+            style={styles.avatar} />
 
           <Text style={styles.username}>
-           {/* {currUser.user.name} */}
+            {/* {currUser.user.name} */}
            Sample
           </Text>
           <Text style={styles.addr}>
-          34. Egbeda, Lagos
+            34. Egbeda, Lagos
           </Text>
+          <TouchableOpacity onPress={() => props.navigation.navigate('Profile')}>
+          <Text>Profile</Text>
+          </TouchableOpacity>
+
         </View>
-        <View style={{ width:"100%"}}>
+        <View style={{ width: "100%" }}>
           <DrawerItem
-            label={()=>{
-              return <DrawerItemCustom title="Likes" counter={'40'}/>
-              
+            label={() => {
+              return <DrawerItemCustom title="Likes" counter={'40'} />
+
             }}
             labelStyle={styles.drawerLabel}
             // style={styles.drawerItem}
@@ -124,19 +129,19 @@ const DrawerContent = props => {
             icon={() => <Ionicons name="ios-checkmark-circle-outline" color="white" size={25} />}
           />
           <DrawerItem
-           label={()=>{
-            return <DrawerItemCustom title="Matches" counter={'40'}/>
-            
-          }}
+            label={() => {
+              return <DrawerItemCustom title="Matches" counter={'40'} />
+
+            }}
             labelStyle={{ color: 'white', marginLeft: -16 }}
             // style={{ alignItems: 'flex-start', marginVertical: 0 }}
             onPress={() => props.navigation.navigate('Messages')}
             icon={() => <AntDesign name="hearto" color="white" size={25} />}
           />
           <DrawerItem
-             label={()=>{
-              return <DrawerItemCustom title="Looking for"/>
-              
+            label={() => {
+              return <DrawerItemCustom title="Random Thougts" />
+
             }}
             labelStyle={{ color: 'white', marginLeft: -16 }}
             // style={{ alignItems: 'flex-start', marginVertical: 0 }}
@@ -144,9 +149,9 @@ const DrawerContent = props => {
             icon={() => <Ionicons name="compass-outline" color="white" size={25} />}
           />
           <DrawerItem
-             label={()=>{
-              return <DrawerItemCustom title="Settings"/>
-              
+            label={() => {
+              return <DrawerItemCustom title="Settings" />
+
             }}
             labelStyle={{ color: 'white', marginLeft: -16 }}
             // style={{ alignItems: 'flex-start', marginVertical: 0 }}
@@ -156,12 +161,12 @@ const DrawerContent = props => {
         </View>
       </View>
 
-      <View style={{marginTop:70}}>
+      <View style={{ marginTop: 70 }}>
         <DrawerItem
           label="Logout"
           labelStyle={{ color: 'white' }}
           icon={() => <AntDesign name="poweroff" color="white" size={16} />}
-          onPress={() => {signOut()}}
+          onPress={() => { signOut() }}
         />
       </View>
     </DrawerContentScrollView>
@@ -183,26 +188,26 @@ export default () => {
 
   return (
     // <LinearGradient style={{ flex: 1 }} colors={['#E94057', '#4A00E0']}>
-      <Drawer.Navigator
-        // hideStatusBar
-        drawerType="slide"
-        overlayColor="transparent"
-        drawerStyle={styles.drawerStyles}
-        contentContainerStyle={{ flex: 1 }}
-        drawerContentOptions={{
-          activeBackgroundColor: 'transparent',
-          activeTintColor: 'white',
-          inactiveTintColor: 'white',
-        }}
-        sceneContainerStyle={{ backgroundColor: OFFICIAL_RED }}
-        drawerContent={props => {
-          setProgress(props.progress);
-          return <DrawerContent {...props} />;
-        }}>
-        <Drawer.Screen name="Screens">
-          {props => <Screens {...props} style={animatedStyle} />}
-        </Drawer.Screen>
-      </Drawer.Navigator>
+    <Drawer.Navigator
+      // hideStatusBar
+      drawerType="slide"
+      overlayColor="transparent"
+      drawerStyle={styles.drawerStyles}
+      contentContainerStyle={{ flex: 1 }}
+      drawerContentOptions={{
+        activeBackgroundColor: 'transparent',
+        activeTintColor: 'white',
+        inactiveTintColor: 'white',
+      }}
+      sceneContainerStyle={{ backgroundColor: OFFICIAL_RED }}
+      drawerContent={props => {
+        setProgress(props.progress);
+        return <DrawerContent {...props} />;
+      }}>
+      <Drawer.Screen name="Screens">
+        {props => <Screens {...props} style={animatedStyle} />}
+      </Drawer.Screen>
+    </Drawer.Navigator>
   );
 };
 
@@ -228,26 +233,26 @@ const styles = StyleSheet.create({
     marginBottom: 16,
     borderColor: 'white',
     borderWidth: StyleSheet.hairlineWidth,
-    height:80,
+    height: 80,
 
-              width: 80,
-              // scale: 0.5,
+    width: 80,
+    // scale: 0.5,
   },
-  avatarContainer:{
-      flex:0.4,
-      justifyContent:"center",
-      alignItems:"center",
-      bottom:20,
-      margin:20,
-      height:200
+  avatarContainer: {
+    flex: 0.4,
+    justifyContent: "center",
+    alignItems: "center",
+    bottom: 20,
+    margin: 20,
+    height: 200
   },
-  username:{
-    color:OFFICIAL_WHITE,
-    fontSize:18,
-    fontWeight:'bold'
+  username: {
+    color: OFFICIAL_WHITE,
+    fontSize: 18,
+    fontWeight: 'bold'
   },
-  addr:{
-    color:OFFICIAL_WHITE,
-    fontSize:16
+  addr: {
+    color: OFFICIAL_WHITE,
+    fontSize: 16
   }
 });

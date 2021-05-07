@@ -20,8 +20,7 @@ const  SelineContextProvider =(props)=>{
 
     return(
         <SelineContext.Provider 
-        value={{isLoggedIn,
-            user,setUser,setisLoggedIn,
+        value={{isLoggedIn, user, setUser,setisLoggedIn,
          loginStatus,  currUser,dispatchLoginStatus,  setCurrUser,
          userToken,
           }}>

@@ -1,11 +1,11 @@
 import React,{useState} from 'react';
-import {View, Text, StyleSheet, Image,Switch} from 'react-native';
+import {View, Text, StyleSheet, Image,TouchableOpacity} from 'react-native';
 import { OFFICIAL_RED, OFFICIAL_WHITE } from '../utility/constants';
 import FIcon from 'react-native-vector-icons/Feather';
 import ProfileOptionSwitch from '../components/ProfileOptionSwitch';
 import ProfileOptionArrow from '../components/ProfileOptionArror';
 
-const Profile =()=> {
+const Profile =(props:any)=> {
     const [isEnabled, setIsEnabled] = useState<boolean>(false);
     const toggleSwitch = () => setIsEnabled(previousState => !previousState);
   
@@ -19,16 +19,20 @@ const Profile =()=> {
 
                     <View style={styles.containTwo}> 
                          <Text style={styles.name}>Ola Edwin</Text>
+                         <TouchableOpacity onPress={props.navigation.navigate('ProfileUpdate')}>
                          <View style={styles.actionContainer}>
                             <FIcon name="user" size={20} color={OFFICIAL_WHITE}/>
                             <Text style={styles.title}>Edit Profile</Text>
-                         </View>
+                         </View>  
+                         </TouchableOpacity>
+
                     </View>
                    
                 </View> 
                 <ProfileOptionSwitch title={"Get Notifications"}/>
                 <ProfileOptionSwitch title={"Profile"}/>
                 <ProfileOptionArrow title={"Account Settings"}/>
+                <ProfileOptionArrow title={"Privacy Settings"} handlePress={() => props.navigation.navigate('Privacy Settings')}/>
                 <ProfileOptionArrow title={"About us"}/>
                 <ProfileOptionArrow title={"Log Out"}/>
                 <ProfileOptionArrow title={"Delete Account"}/>
