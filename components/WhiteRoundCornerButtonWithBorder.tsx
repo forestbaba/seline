@@ -1,17 +1,29 @@
 import React,{ReactNode} from 'react';
-import {TouchableOpacity,Text, StyleSheet,Dimensions } from 'react-native';
-import { OFFICIAL_GRAY } from '../utility/constants';
+import {TouchableOpacity,Text, StyleSheet,Dimensions,ActivityIndicator } from 'react-native';
+import { OFFICIAL_GRAY, OFFICIAL_RED } from '../utility/constants';
 
 
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
  const WhiteRoundCornerButtonWithBorder:React.FC<{title?: string,
-     color?:string, textcolor?:string,marginTop?:number}> = ({title,color,textcolor, marginTop}) =>{
+     color?:string, textcolor?:string,marginTop?:number, onPress?:any, loading?:boolean}> = ({title,color,textcolor, marginTop,onPress, loading}) =>{
     return (
-        <TouchableOpacity style={[styles.actionbutton,{backgroundColor:color, marginTop:marginTop}]}>
-          <Text style={[styles.actionButtonText,{color:textcolor}]}>{title}</Text>
+      <>
+        {
+              loading ? (
+                	<ActivityIndicator size="large" color={OFFICIAL_RED}  style={styles.spin}/>
+              ) :(
+<TouchableOpacity onPress={onPress}
+        style={[styles.actionbutton,{backgroundColor:color, marginTop:marginTop}]}>
+          <Text style={[styles.actionButtonText,{color:textcolor}]}>
+          
+                {title}
+            </Text>
         </TouchableOpacity>
+              )
+              }
+        </>
     )
 }
 
@@ -33,8 +45,13 @@ const styles = StyleSheet.create({
     paddingLeft:40,
     paddingRight:40,
     fontSize:14,
-    color:'#E7000E'
+    color:'#E7000E',
+    fontWeight:"900"
   },
+  spin:{
+    alignSelf:"center",
+    position:"relative"
+  }
   });
   
 export default  WhiteRoundCornerButtonWithBorder;

@@ -23,7 +23,7 @@ const  SelineContextProvider =(props)=>{
         value={{isLoggedIn, user, setUser,setisLoggedIn,
          loginStatus,  currUser,dispatchLoginStatus,  setCurrUser,
          userToken,
-          }}>
+        }}>
             {props.children}
         </SelineContext.Provider>
     )

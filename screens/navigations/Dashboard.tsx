@@ -1,10 +1,10 @@
 import React from 'react';
 import {View, Text} from 'react-native'
 
- const Dashboard =()=> {
+ const Dashboard =(props:any)=> {
     return (
         <View>
-            <Text>Hello</Text>
+            <Text>ooooooooo</Text>
         </View>
     )
 }

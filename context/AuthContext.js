@@ -42,10 +42,6 @@ export const initialLoginState={
   }
 
 const AuthProvider =(props)=>{
-
-    // const authContext = React.useMemo(() => ({
-    //   }),[])
-
     const [loginState, dispatch] = React.useReducer(loginreducer, initialLoginState);
 
    const signIn = async () =>{
@@ -82,7 +78,7 @@ const AuthProvider =(props)=>{
       }
 
     return(
-        <AuthContext.Provider value={{signOut}}>
+        <AuthContext.Provider>
             {props.children}
         </AuthContext.Provider>
     )

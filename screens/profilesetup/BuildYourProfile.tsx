@@ -5,23 +5,34 @@ import ProfileIconSvg from '../../assets/profileIconSvg.svg';
 import WhiteRoundCornerButton from '../../components/WhiteRoundCornerButton';
 
 interface Bup{
+
     handlePress: ()=>void
+    pressIcon: ()=>void
+    hideIcon: boolean,
+    errMsg:string
 }
-const BuildYourProfile:React.FC<Bup> =({handlePress})=> {
+const BuildYourProfile:React.FC<Bup> =({handlePress, pressIcon,hideIcon, errMsg})=> {
     return (
         <View style={styles.parent}>
             <View style={styles.child1}>
-                <ProfileIconSvg width="150" height="150"/>
+                { !hideIcon ? <ProfileIconSvg 
+                width="150" 
+                height="150" 
+                style={styles.imageStyle} 
+                onPress={pressIcon}/> :
+                null}                
                 <Text style={styles.buildprofile}>{BUILD_YOUR_PROFILE}</Text>
                 <Text style={styles.buildprofiledesc}>{BUILD_YOUR_PROFILE_DESCRIPTION}</Text>
             </View>
+            <Text style={styles.uploadError}>{errMsg}</Text>
             <View style={styles.child2}>
-                <WhiteRoundCornerButton color={OFFICIAL_RED} 
+                <WhiteRoundCornerButton 
+                color={OFFICIAL_RED} 
                 handlePress={handlePress}
-                title="Add your photo" textcolor="#FFF"/>
+                title="Add your photo" 
+                textcolor="#FFF"/>
                 <TouchableOpacity>
-                                    <Text style={styles.usefromfacebook}>{USE_FROM_FACEBOOK}</Text>
-
+                    <Text style={styles.usefromfacebook}>{USE_FROM_FACEBOOK}</Text>
                 </TouchableOpacity>
             </View>
             
@@ -67,6 +78,14 @@ const styles= StyleSheet.create({
     buildprofiledesc:{
         color:"#282F39",
         textAlign:'center'
+    },
+    imageStyle:{
+        // borderRadius:100,
+        backgroundColor:"blue"
+    },
+    uploadError:{
+        color:OFFICIAL_RED,
+        textAlign:"center"
     }
 })
 export default BuildYourProfile;

@@ -24,11 +24,11 @@
 	<array>
 		<dict>
 			<key>CFBundleIdentifier</key>
-			<string></string>
+			<string/>
 			<key>CFBundleTypeRole</key>
 			<string>Editor</string>
 			<key>CFBundleURLName</key>
-			<string></string>
+			<string/>
 			<key>CFBundleURLSchemes</key>
 			<array>
 				<string>com.googleusercontent.apps.90921608227-jvf8h9243gn3kvcpvdeltcu1b0ss62ab</string>
@@ -57,11 +57,17 @@
 		</dict>
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Seline requires the photo library access</string>
+	<key>NSCameraUsageDescription</key>
+	<string>Seline requires the camera access to take photo</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>Seline requires permission to select image</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>NSLocationAlwaysUsageDescription</key>
-	<string></string>
+	<string/>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AntDesign.ttf</string>
@@ -79,6 +85,7 @@
 		<string>Octicons.ttf</string>
 		<string>SimpleLineIcons.ttf</string>
 		<string>Zocial.ttf</string>
+		<string>Fontisto.ttf</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

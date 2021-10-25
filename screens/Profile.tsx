@@ -45,7 +45,8 @@ const Profile =(props:any)=> {
 
 const styles = StyleSheet.create({
     parent:{
-        flex:1
+        flex:1,
+        marginTop:40
     },
     image:{
         width: 100,

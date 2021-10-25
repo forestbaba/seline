@@ -10,12 +10,16 @@ import { OFFICIAL_WHITE } from '../../utility/constants';
 import SelineLike from '../../assets/seline_like_icon.svg';
 import SelineUnlike from '../../assets/seline_unlike.svg';
 import { SelineContext } from '../../context/SelineContext';
+import { PlayContext } from '../../context/TestContext';
 
+import { useDispatch, useSelector } from 'react-redux'
+import { loadAllUsers } from '../../statemanagement/User/action';
 interface LikesProps{
     // userslist 
     navigation:NavigationStackProp,
     item:object, 
-    index:number
+    index:number,
+    options:any
 } 
 interface itemz{
         item?:any,
@@ -24,49 +28,52 @@ interface itemz{
 
 
 const Likes:React.FC<LikesProps> =({ item, index})=> {
-    const { setisLoggedIn, currUser, setUser, user } = useContext(SelineContext)
+
+    const dispatch = useDispatch()
+    const { userData: { loading, allUsers } } = useSelector((state) => state);
+
+    // const {addOne} = useContext(PlayContext)
+
+
+    // const { setisLoggedIn, currUser, setUser, user } = useContext(SelineContext)
     const { width, height } = Dimensions.get("window");
-    const [loading, setLoading] = useState(false)
+    // const [loading, setLoading] = useState(false)
     const navigation = useNavigation();
 
     useEffect(()=>{
+
         const initial =async()=>{
+                 dispatch( loadAllUsers())
 
-            setLoading(true)
-
-            firestore().collection('Users').where('email', '>=', currUser.user.email).get()
-            .then(querySnapshot => {
-                setLoading(false)
-
-                setUser(querySnapshot._docs[0]._data)
-             })
-             .catch(err =>{
-                setLoading(false)
-
-                 console.log('ERR: ', err)
-             })
-            console.log('^%%%%%%%%%%%%%%%%%%%%%%%', currUser.user.email)
         }
          initial()
+         if(allUsers && allUsers.length > 0){
+             console.log('LLL', allUsers)
+         }
     },[])
 
     const entries =[
-        {name:"Kathrine Bale", age:25, address:"5, Femi Jefferson, Ogba"},
-        {name:"Bisi Cole", age:27, address:"Oba Adeshinda road, Ibeju"},
-        {name:"Randi SMith", age:22, address:"Bismuth avenue, Ikeja"},
-        {name:"Silo Bane", age:33, address:"Basmuda kolar lane"},
-        {name:"Yomi Slone", age:20, address:"Adura cresent"},
-        {name:"Pasmuth Omia", age:22, address:"Olofin way, Victoria Island"},
-        {name:"Agba Segun", age:39, address:"Runway close, Ikeja"},
-        {name:"Dada James", age:29, address:"Ogo Oluwa Avenue, Ogba"},
+        {key:1,name:"Kathrine Bale", age:25, address:"5, Femi Jefferson, Ogba"},
+        {key:2,name:"Bisi Cole", age:27, address:"Oba Adeshinda road, Ibeju"},
+        {key:3,name:"Randi SMith", age:22, address:"Bismuth avenue, Ikeja"},
+        {key:4,name:"Silo Bane", age:33, address:"Basmuda kolar lane"},
+        {key:5,name:"Yomi Slone", age:20, address:"Adura cresent"},
+        {key:6,name:"Pasmuth Omia", age:22, address:"Olofin way, Victoria Island"},
+        {key:7,name:"Agba Segun", age:39, address:"Runway close, Ikeja"},
+        {key:8,name:"Dada James", age:29, address:"Ogo Oluwa Avenue, Ogba"},
     ]
+
+    const handleAddOne =()=>{
+    //    addOne()
+    }
    const _renderItem = ({item, index}:itemz) => {
 
         return (
             <>
             <View style={styles.parent}>
                 <View style={{padding:10, borderRadius:25}}>
-                    <Image source={require('../../assets/Seline_profile_img.jpg')} 
+                    <Image source={{uri: item.image}} 
+                    // <Image source={require('../../assets/Seline_profile_img.jpg')} 
                     width={100} height={200}
                     style={styles.image}
                     />
@@ -89,7 +96,8 @@ const Likes:React.FC<LikesProps> =({ item, index})=> {
             <View style={styles.overflowHolder}>
                 {
                     entries.slice(3).map((item, index) =>{
-                        return <Image source={require('../../assets/Seline_profile_img.jpg')}  
+                        return <Image source={require('../../assets/Seline_profile_img.jpg')} 
+                        key={item.key} 
                         style={[styles.overflowImages,{width:index === 0 ? 50 : index== 1 ? 30 : index == 2 ? 10 : 0, 
                             height:index === 0 ? 50 : index== 1 ? 30 : index == 2 ? 10 : 0}]}/>
                     })
@@ -106,27 +114,31 @@ const Likes:React.FC<LikesProps> =({ item, index})=> {
     //     return <Text>Loading......</Text>
     // }
     // if(user.user){
-    //     return (
-    //         <View>
-    //         <Carousel
+        return (
+            <View>
+            <Carousel
 
-    //           data={entries}
-    //           renderItem={_renderItem}
-    //           sliderWidth={width}
-    //           itemWidth={width -50}
-    //           activeSlideOffset={20}
-    //         //   enableMomentum
-    //         //   layoutCardOffset={50}
-    //         />
-    //         </View>
-    //     );
+              data={allUsers}
+              renderItem={_renderItem}
+              sliderWidth={width}
+              itemWidth={width -50}
+              activeSlideOffset={20}
+            //   enableMomentum
+            //   layoutCardOffset={50}
+            />
+            </View>
+        );
     // }else{
 
-        return(
-           <View style={styles.parent2}>
-                <Text>Add Address</Text>
-            </View> 
-        )
+        // return(
+        //    <View style={styles.parent2}>
+        //         <Text>Add Address</Text>
+        //         <TouchableOpacity 
+        //         onPress={handleAddOne}><Text>Call me</Text>
+        //         </TouchableOpacity>
+
+        //     </View> 
+        // )
         
     //}
    
@@ -138,13 +150,16 @@ const styles = StyleSheet.create({
     parent:{
         marginTop:100,
         borderRadius:25,
-        borderTopLeftRadius:100
+        borderTopLeftRadius:100,
+        // backgroundColor:"red"
         // padding:50
         // marginLeft:100,
         // marginRight:100
     },
     image:{
-        borderRadius:25
+        borderRadius:25,
+        width:'100%',
+        height:'80%'
     },
     status:{
         flexDirection:'row',
@@ -200,6 +215,7 @@ const styles = StyleSheet.create({
         flex:1,
         justifyContent:'center',
         alignItems:"center",
+        marginTop:20
     }
 })
 export default Likes;

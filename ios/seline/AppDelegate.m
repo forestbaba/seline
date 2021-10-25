@@ -30,8 +30,8 @@ static void InitializeFlipper(UIApplication *application) {
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
   
-  if(![FIRApp defaultApp]){
-     [FIRApp configure];}
+//  if(![FIRApp defaultApp]){
+//     [FIRApp configure];}
   
 //  [RNSplashScreen show];  // here
 

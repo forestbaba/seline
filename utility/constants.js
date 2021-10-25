@@ -9,7 +9,7 @@ module.exports={
     ENTER_4_DIGIT_TEXT: "Enter 4-digit code we have sent to you at +234 000000000000000",
     BUILD_YOUR_PROFILE: "Build your profile",
     USE_FROM_FACEBOOK:  "Use from Facebook",
-    BUILD_YOUR_PROFILE_DESCRIPTION: "Seline is building real dating between real people, at least add one photo of your self. ",
+    BUILD_YOUR_PROFILE_DESCRIPTION: "Please click the image above to select a picture ",
      IDENTIFY_YOURSELF:  "Identify yourself",
      INTRODUCE_YOURSELF: "Introduce yourself fill out the details so  people know about you",
      ADD_RECOVERY_EMAIL:"Add Recovery Email",

@@ -6,11 +6,21 @@ import {OFFICIAL_GRAY} from '../utility/constants'
 const screenWidth = Dimensions.get("window").width;
 const screenHeight = Dimensions.get("window").height;
 
- const RoundCornerTextInput:React.FC<{placeholder?: string,width:string,
-     color?:string, textcolor?:string,placeholderTextColor?:string}> = ({placeholder,width, color,textcolor, placeholderTextColor}) =>{
+ const RoundCornerTextInput:React.FC<{placeholder?: string,width?:string,
+     color?:string, textcolor?:string,
+     placeholderTextColor?:string,
+     handleOnChange?:(any:string)=>void,
+     isSecure?:boolean
+      maxLength?:number, onFocus?:any,value?:any}> = ({placeholder,width,isSecure,handleOnChange, color,textcolor, placeholderTextColor,maxLength,onFocus,value}) =>{
     return (
-        <TextInput placeholder={placeholder} style={[styles.roundCornerTextInput,
-            {width:width, placeholderTextColor:OFFICIAL_GRAY}]}/>
+        <TextInput maxLength={maxLength} 
+        placeholder={placeholder}
+        value={value}
+        onFocus={onFocus}
+        secureTextEntry={isSecure}
+        onChangeText={handleOnChange}
+         style={[styles.roundCornerTextInput,
+            {width:width}]}/>
     )
 }
 
@@ -22,7 +32,7 @@ const styles = StyleSheet.create({
     padding:15,
     paddingLeft:35,
     paddingRight:35,
-    marginVertical:10
+    marginVertical:10,
 }
   });
   

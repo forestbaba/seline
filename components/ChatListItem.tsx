@@ -1,10 +1,10 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image, TouchableOpacity} from 'react-native';
+import {View, Text, StyleSheet, Image, TouchableOpacity, GestureResponderEvent} from 'react-native';
 import { OFFICIAL_GRAY, OFFICIAL_PINK,OFFICIAL_WHITE,OFFICIAL_GREEN } from '../utility/constants';
 import Ficon from 'react-native-vector-icons/FontAwesome'
-const  ChatListItem:React.FC<{readStatus?:boolean}> =({readStatus})=> {
+const  ChatListItem:React.FC<{readStatus?:boolean, clicked?:()=>void}> =({readStatus, clicked})=> {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity onPress={clicked}>
             <View style={styles.parent}>
                 <View style={[styles.detailsHolder,{backgroundColor: OFFICIAL_WHITE}]}>
                 <Ficon name="circle" size={15} color={OFFICIAL_GREEN} style={styles.onlineStatus}/>

@@ -19,6 +19,7 @@ import { NavigationStackProp } from 'react-navigation-stack';
 
 interface MainProps{
     navigation:NavigationStackProp,
+    title:String
    
 }
 const Main:React.FC<MainProps>=({navigation})=> {
